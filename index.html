@@ -418,73 +418,78 @@
             line-height: 1.4;
         }
 
-        /* Sección de reseñas */
+        /* Sección de reseñas minimalista */
         .reviews-section {
             max-width: 1200px;
             margin: 4rem auto;
             padding: 0 2rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            padding: 3rem 2rem;
         }
 
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+        .reviews-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .review-card {
+        .review-item {
             background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .review-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-left: 4px solid #4a6fa5;
         }
 
         .review-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .reviewer-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4a6fa5, #6d9dc5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .reviewer-name {
-            font-weight: bold;
+            font-weight: 600;
             color: #333;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
-        .stars {
+        .stars-mini {
             color: #FFD700;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
 
         .review-date {
-            color: #666;
-            font-size: 0.85rem;
-            margin-top: 0.3rem;
+            color: #888;
+            font-size: 0.8rem;
             margin-bottom: 0.5rem;
-        }
-
-        .review-stay {
-            color: #4a6fa5;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
         }
 
         .review-text {
             color: #555;
-            line-height: 1.6;
-            font-size: 0.95rem;
-            font-style: italic;
+            line-height: 1.5;
+            font-size: 0.9rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* Sección Explora CDMX */
@@ -555,7 +560,7 @@
             margin-top: 0.5rem;
         }
 
-        /* Sección de propiedades */
+        /* Sección de propiedades simplificada */
         .properties-section {
             max-width: 1200px;
             margin: 3rem auto;
@@ -568,94 +573,60 @@
             gap: 2rem;
         }
 
-        .property-card {
+        .property-card-simple {
             background: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .property-card:hover {
+        .property-card-simple:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
-        .property-card img {
+        .property-card-simple img {
             width: 100%;
             height: 220px;
             object-fit: cover;
         }
 
-        .property-content {
+        .property-content-simple {
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
-        .property-content h3 {
+        .property-content-simple h3 {
             font-size: 1.3rem;
             margin-bottom: 0.5rem;
             color: #333;
+            text-align: center;
         }
 
-        .property-meta {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-            color: #666;
-            font-size: 0.9rem;
-            flex-wrap: wrap;
-        }
-
-        .property-meta span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .property-description {
-            color: #555;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-            font-size: 0.95rem;
-        }
-
-        .property-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
-
-        .price {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #ff5a5f;
-        }
-
-        .price-currency {
-            font-size: 0.9rem;
-            color: #777;
-            margin-left: 2px;
-        }
-
-        .btn-secondary {
+        .btn-visit {
             background-color: #4a6fa5;
             color: white;
             border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: background-color 0.3s;
             text-decoration: none;
             display: inline-block;
             text-align: center;
+            width: 100%;
+            margin-top: auto;
+            font-size: 1rem;
         }
 
-        .btn-secondary:hover {
+        .btn-visit:hover {
             background-color: #3a5a8a;
         }
 
@@ -853,8 +824,7 @@
             
             .properties-grid,
             .services-grid-minimal,
-            .explore-grid,
-            .reviews-grid {
+            .explore-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -891,6 +861,10 @@
             
             .section-title {
                 font-size: 1.8rem;
+            }
+            
+            .review-item {
+                padding: 1rem;
             }
         }
     </style>
@@ -1101,12 +1075,12 @@
             </div>
         </section>
 
-        <!-- Sección de Reseñas -->
+        <!-- Sección de Reseñas Minimalista -->
         <section class="reviews-section" id="reseñas">
             <h2 class="section-title">Lo que dicen nuestros huéspedes</h2>
-            <p class="section-subtitle">Las últimas reseñas de Airbnb sobre nuestra propiedad</p>
+            <p class="section-subtitle">Reseñas recientes de nuestros alojamientos</p>
             
-            <div class="reviews-grid" id="reviews-container">
+            <div class="reviews-container" id="reviews-container">
                 <!-- Las reseñas se cargarán dinámicamente aquí -->
             </div>
         </section>
@@ -1178,72 +1152,39 @@
                         <i class="fas fa-lightbulb" style="color: #4a6fa5; margin-right: 10px;"></i>
                         <strong>Tip de Morada Luna:</strong> Haz clic en cualquier imagen para buscar información profesional con IA sobre ese lugar en Google.
                     </p>
-                    <a href="https://wa.me/5215511406820?text=¡Hola! Necesito recomendaciones para mi viaje a CDMX" class="btn-secondary" target="_blank" style="text-decoration: none;">Solicitar Recomendaciones</a>
+                    <a href="https://wa.me/5215511406820?text=¡Hola! Necesito recomendaciones para mi viaje a CDMX" class="btn-visit" target="_blank" style="text-decoration: none;">Solicitar Recomendaciones</a>
                 </div>
             </div>
         </section>
 
-        <!-- Sección de propiedades -->
+        <!-- Sección de propiedades simplificada -->
         <section class="properties-section" id="propiedades">
             <h2 class="section-title">Nuestros Alojamientos</h2>
             <div id="properties-grid" class="properties-grid">
                 <!-- Propiedad 1: Morada Luna Roma Norte -->
-                <div class="property-card" onclick="openWhatsApp('Morada Luna Roma Norte')">
+                <div class="property-card-simple">
                     <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1270521288480613949/original/9a10b18c-7b51-4fb1-82b0-1923e0d799ea.jpeg?im_w=720" alt="Morada Luna Roma Norte">
-                    <div class="property-content">
+                    <div class="property-content-simple">
                         <h3>Morada Luna Roma Norte</h3>
-                        <div class="property-meta">
-                            <span><i class="fas fa-users"></i> 2-4 personas</span>
-                            <span><i class="fas fa-bed"></i> 2 camas</span>
-                            <span><i class="fas fa-bath"></i> 1 baño</span>
-                        </div>
-                        <p class="property-description">Encantador departamento en el corazón de Roma Norte. Disfruta de la vibrante vida cultural y gastronómica del barrio desde una ubicación privilegiada.</p>
-                        <div class="property-price">
-                            <div>
-                                <span class="price">$1,200 <span class="price-currency">MXN</span></span>
-                            </div>
-                            <div class="btn-secondary" onclick="event.stopPropagation(); openWhatsApp('Morada Luna Roma Norte')">Consultar Disponibilidad</div>
-                        </div>
+                        <button class="btn-visit" onclick="openWhatsApp('Morada Luna Roma Norte')">Visitar</button>
                     </div>
                 </div>
 
                 <!-- Propiedad 2: Morada Luna Polanco -->
-                <div class="property-card" onclick="openWhatsApp('Morada Luna Polanco')">
+                <div class="property-card-simple">
                     <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/486455253.jpg?k=c2375c97db0bc4ecaf43539ffa81d27ba853e321fa5945818b5880081d49b428&o=" alt="Morada Luna Polanco">
-                    <div class="property-content">
+                    <div class="property-content-simple">
                         <h3>Morada Luna Polanco</h3>
-                        <div class="property-meta">
-                            <span><i class="fas fa-users"></i> 2 personas</span>
-                            <span><i class="fas fa-bed"></i> 1 cama</span>
-                            <span><i class="fas fa-bath"></i> 1 baño</span>
-                        </div>
-                        <p class="property-description">Elegante estudio en Polanco, la zona más exclusiva de la CDMX. Perfecto para viajeros de negocios o parejas que buscan lujo y comodidad.</p>
-                        <div class="property-price">
-                            <div>
-                                <span class="price">$1,500 <span class="price-currency">MXN</span></span>
-                            </div>
-                            <div class="btn-secondary" onclick="event.stopPropagation(); openWhatsApp('Morada Luna Polanco')">Consultar Disponibilidad</div>
-                        </div>
+                        <button class="btn-visit" onclick="openWhatsApp('Morada Luna Polanco')">Visitar</button>
                     </div>
                 </div>
 
                 <!-- Propiedad 3: Morada Luna Coyoacán -->
-                <div class="property-card" onclick="openWhatsApp('Morada Luna Coyoacán')">
+                <div class="property-card-simple">
                     <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/769863284.jpg?k=3c56d2b0ff1ec71645aa88cc2b5e5aee0b988d2ba7407ca44d761c594897bfb2&o=" alt="Morada Luna Coyoacán">
-                    <div class="property-content">
+                    <div class="property-content-simple">
                         <h3>Morada Luna Coyoacán</h3>
-                        <div class="property-meta">
-                            <span><i class="fas fa-users"></i> 4 personas</span>
-                            <span><i class="fas fa-bed"></i> 2 camas</span>
-                            <span><i class="fas fa-bath"></i> 1 baño</span>
-                        </div>
-                        <p class="property-description">Acogedor departamento en el histórico barrio de Coyoacán. A pocos pasos de la Casa Azul de Frida Kahlo y del centro cultural más importante del sur de la ciudad.</p>
-                        <div class="property-price">
-                            <div>
-                                <span class="price">$1,350 <span class="price-currency">MXN</span></span>
-                            </div>
-                            <div class="btn-secondary" onclick="event.stopPropagation(); openWhatsApp('Morada Luna Coyoacán')">Consultar Disponibilidad</div>
-                        </div>
+                        <button class="btn-visit" onclick="openWhatsApp('Morada Luna Coyoacán')">Visitar</button>
                     </div>
                 </div>
             </div>
@@ -1322,39 +1263,31 @@
                 name: "Alvaro",
                 stars: 5,
                 date: "Hace 3 semanas",
-                stay: "Estancia de una noche",
-                text: "Es bonito el alojamiento, muy limpio pero hace mucho calor aún en invierno pues No tiene ventilación ni el cuarto, ni el baño. Si abres la ventana para tener un poquito de ventilación te ven los de la cocina."
+                text: "Es bonito el alojamiento, muy limpio pero hace mucho calor aún en invierno pues no tiene ventilación."
             },
             {
                 name: "Alejandro",
-                location: "Atlixco, México",
                 stars: 5,
-                date: "noviembre de 2025",
-                stay: "Estancia de varias noches",
+                date: "noviembre 2025",
                 text: "Excelente lugar para quedarse, en muy buena zona y con un gran anfitrión."
             },
             {
                 name: "Pierina",
-                location: "Huánuco, Perú",
                 stars: 5,
-                date: "octubre de 2025",
-                stay: "Estancia de varias noches",
-                text: "Me encantó, estaba un poco asustada por algunos comentarios que indicaban que era ruidoso y caliente, pero no tuvimos ninguno de los dos problemas, también funciona muy bien el agua caliente, el Internet es perfecto y rápido para hacer home office, todo perfecto, yo fui con mi hermano y pasamos unos días increíbles! También está de fácil acceso caminando, si disfrutan de caminar, les va a encantar!"
+                date: "octubre 2025",
+                text: "Me encantó, todo perfecto. El Internet es rápido para home office, pasamos unos días increíbles."
             },
             {
                 name: "María",
                 stars: 5,
-                date: "septiembre de 2025",
-                stay: "Estancia de 2 noches",
-                text: "Muy buena ubicación, el departamento está limpio y cómodo. El anfitrión siempre estuvo atento a nuestras necesidades. Recomendado."
+                date: "septiembre 2025",
+                text: "Muy buena ubicación, el departamento está limpio y cómodo. El anfitrión siempre atento."
             },
             {
                 name: "Carlos",
-                location: "Guadalajara, México",
                 stars: 5,
-                date: "agosto de 2025",
-                stay: "Estancia de fin de semana",
-                text: "Excelente experiencia, todo estaba impecable. La ubicación es perfecta para conocer la ciudad. Definitivamente volvería."
+                date: "agosto 2025",
+                text: "Excelente experiencia, todo impecable. La ubicación perfecta para conocer la ciudad."
             }
         ];
 
@@ -1399,13 +1332,16 @@
             });
         });
 
-        // Cargar reseñas
+        // Cargar reseñas minimalistas
         function loadReviews() {
             const reviewsContainer = document.getElementById('reviews-container');
             
             reviews.forEach(review => {
-                const reviewCard = document.createElement('div');
-                reviewCard.className = 'review-card';
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                
+                // Obtener inicial del nombre para el avatar
+                const initial = review.name.charAt(0);
                 
                 // Crear estrellas
                 let starsHtml = '';
@@ -1413,20 +1349,19 @@
                     starsHtml += '<i class="fas fa-star"></i>';
                 }
                 
-                reviewCard.innerHTML = `
+                reviewItem.innerHTML = `
                     <div class="review-header">
-                        <div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">${initial}</div>
                             <div class="reviewer-name">${review.name}</div>
-                            ${review.location ? `<div class="review-location">${review.location}</div>` : ''}
                         </div>
-                        <div class="stars">${starsHtml}</div>
+                        <div class="stars-mini">${starsHtml}</div>
                     </div>
                     <div class="review-date">${review.date}</div>
-                    <div class="review-stay">${review.stay}</div>
                     <div class="review-text">"${review.text}"</div>
                 `;
                 
-                reviewsContainer.appendChild(reviewCard);
+                reviewsContainer.appendChild(reviewItem);
             });
         }
 
