@@ -750,19 +750,28 @@
             gap: 2rem;
             margin-top: 1.5rem;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .partner-logo {
             height: 40px;
             width: auto;
             object-fit: contain;
-            filter: brightness(0) invert(1);
-            opacity: 0.8;
-            transition: opacity 0.3s;
+            opacity: 0.9;
+            transition: opacity 0.3s, transform 0.3s;
         }
 
         .partner-logo:hover {
             opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .partner-logo.airbnb {
+            filter: none; /* Mantiene el color original */
+        }
+
+        .partner-logo.booking {
+            filter: none; /* Mantiene el color original */
         }
 
         /* Responsive */
@@ -949,7 +958,7 @@
                     <p>Creemos que un buen alojamiento puede transformar un viaje en una experiencia inolvidable. Por eso, cada propiedad Morada Luna está cuidadosamente diseñada y equipada para superar tus expectativas.</p>
                 </div>
                 <div class="about-image">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiyFIK268Pw0H3F0A3TLXAf7pCZYd0B6uTnw&s" alt="Interior Morada Luna">
+                    <img src="https://i.ibb.co/chjqJCmZ/Gemini-Generated-Image-sall2isall2isall.png" alt="Morada Luna - Cada familia tiene una historia">
                 </div>
             </div>
         </section>
@@ -1315,10 +1324,10 @@
                 
                 <div class="partner-logos">
                     <a href="https://www.airbnb.mx/users/show/156455377" target="_blank">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb" class="partner-logo" style="height: 30px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb" class="partner-logo airbnb" style="height: 40px;">
                     </a>
                     <a href="https://www.booking.com/hotel/mx/casa-luna-morada-polanco-ciudad-de-mexico.es.html" target="_blank">
-                        <img src="https://brandlogovector.com/wp-content/uploads/2022/02/Booking-App-Logo-Small.png" alt="Booking.com" class="partner-logo" style="height: 30px; filter: brightness(0) invert(1);">
+                        <img src="https://brandlogovector.com/wp-content/uploads/2022/02/Booking-App-Logo-Small.png" alt="Booking.com" class="partner-logo booking" style="height: 40px;">
                     </a>
                 </div>
             </div>
