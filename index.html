@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morada Luna - Airbnb</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header y navegación */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a6fa5;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #4a6fa5;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #4a6fa5;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Banner hero con slideshow */
+        .hero-banner {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slideshow-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+        }
+
+        .banner-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 2;
+            max-width: 800px;
+            width: 90%;
+            padding: 2rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .banner-content h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .banner-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .slide-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .indicator.active {
+            background-color: white;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-float i {
+            margin-top: 5px;
+        }
+
+        .whatsapp-text {
+            position: absolute;
+            right: 70px;
+            background-color: #25d366;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s, right 0.3s;
+            pointer-events: none;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .whatsapp-float:hover .whatsapp-text {
+            opacity: 1;
+            right: 75px;
+        }
+
+        /* Search section */
+        .search-section {
+            max-width: 1200px;
+            margin: -50px auto 2rem;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .search-input {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-input label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .search-input input,
+        .search-input select {
+            padding: 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input input:focus,
+        .search-input select:focus {
+            border-color: #4a6fa5;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: #ff5a5f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: end;
+        }
+
+        .btn-primary:hover {
+            background-color: #e04a50;
+        }
+
+        /* Sección Quiénes Somos */
+        .about-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            color: #4a6fa5;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+
+        .about-text p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Sección de servicios minimalista */
+        .services-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #4a6fa5;
+            font-size: 2.2rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-grid-minimal {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-icon-mini {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4a6fa5, #6d9dc5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .service-info h4 {
+            color: #333;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .service-info p {
+            color: #666;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Sección Explora CDMX */
+        .explore-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+
+        .explore-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .explore-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .attraction-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .attraction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .attraction-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .attraction-content {
+            padding: 1.5rem;
+        }
+
+        .attraction-content h3 {
+            color: #4a6fa5;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .attraction-content p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .attraction-tag {
+            display: inline-block;
+            background-color: #f0f7ff;
+            color: #4a6fa5;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* Sección de propiedades */
+        .properties-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .property-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .property-content {
+            padding: 1.5rem;
+        }
+
+        .property-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .property-meta {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: #666;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .property-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .property-description {
+            color: #555;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .property-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ff5a5f;
+        }
+
+        .price-currency {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .btn-secondary {
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: #3a5a8a;
+        }
+
+        /* Sección de sucursales */
+        .branches-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .branches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .branch-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .branch-logo {
+            height: 50px;
+            margin-bottom: 1.5rem;
+            object-fit: contain;
+        }
+
+        .branch-card h3 {
+            color: #4a6fa5;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .branch-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Sección de reserva */
+        .booking-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .amenities-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .amenity {
+            background: #f0f7ff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #4a6fa5;
+            border: 1px solid #d0e3ff;
+        }
+
+        .booking-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+        }
+
+        .booking-form h3 {
+            color: #4a6fa5;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group .info-text {
+            font-weight: bold;
+            color: #4a6fa5;
+            padding: 0.5rem 0;
+        }
+
+        /* Utilidades */
+        .hidden {
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6fa5 100%);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-logo img {
+            height: 70px;
+            width: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links h4,
+        .footer-contact h4,
+        .footer-social h4 {
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .partner-logo {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .partner-logo:hover {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-banner {
+                height: 400px;
+            }
+            
+            .banner-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-box {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-banner {
+                height: 350px;
+            }
+            
+            .banner-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .banner-content p {
+                font-size: 1rem;
+            }
+            
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            
+            .properties-grid,
+            .services-grid-minimal,
+            .explore-grid,
+            .branches-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-logo {
+                align-items: center;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-banner {
+                height: 300px;
+            }
+            
+            .banner-content {
+                padding: 1.5rem;
+            }
+            
+            .banner-content h1 {
+                font-size: 1.6rem;
+            }
+            
+            .search-section {
+                padding: 0 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/5215511406820" class="whatsapp-float" target="_blank" id="whatsappButton">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-text">¿Preguntas? ¡Escríbenos!</span>
+    </a>
+
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img src="https://scontent.fmex5-1.fna.fbcdn.net/v/t39.30808-6/429783676_900322278460845_1861502284872160379_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGF3_BWjafA2VavRUzGpAIKZDIuEIjgjXJkMi4QiOCNcoOr8enbBcsWY0NrN-d2sxw&_nc_ohc=XUZHKRoXimYQ7kNvwH7EwJM&_nc_oc=AdkOOB9PZXASWfCRoSgxTiu3JAG9j-azOn3QYqU0L0PyZs_Keyb4bdjoow-myw4bwhIyzznYkbWHCVpBDCdPFdHX&_nc_zt=23&_nc_ht=scontent.fmex5-1.fna&_nc_gid=Ko4vfdFJAakf025Ray9iyw&oh=00_Afoj8vD2ivy-03mxEXzQxiqoeaBvwK5EMWvaejB3UwHNJQ&oe=695E219E" 
+                     alt="Logo Morada Luna" class="logo">
+                <div class="logo-text">Morada Luna</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#quienes-somos">Quiénes Somos</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#explora-cdmx">Explora CDMX</a></li>
+                <li><a href="#propiedades">Propiedades</a></li>
+                <li><a href="#sucursales">Sucursales</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Banner Hero con Slideshow -->
+        <section class="hero-banner" id="inicio">
+            <div class="slideshow-container">
+                <div class="slide active" style="background-image: url('https://a0.muscache.com/im/pictures/miso/Hosting-1258969709472995115/original/a25745a2-197e-4848-b76f-567b344a274c.jpeg?im_w=1440');"></div>
+                <div class="slide" style="background-image: url('https://a0.muscache.com/im/pictures/hosting/Hosting-1270521288480613949/original/9a10b18c-7b51-4fb1-82b0-1923e0d799ea.jpeg?im_w=1440');"></div>
+                <div class="slide" style="background-image: url('https://a0.muscache.com/im/pictures/miso/Hosting-1259085572925875795/original/4a3afd77-b12a-4611-8689-477c9d9eb53e.jpeg?im_w=1440');"></div>
+                
+                <div class="banner-content">
+                    <h1>Tu refugio perfecto bajo la luna</h1>
+                    <p>Descubre experiencias únicas de alojamiento en los mejores destinos de México</p>
+                    <a href="#propiedades" class="btn-primary" style="text-decoration: none; display: inline-block;">Ver Propiedades</a>
+                </div>
+                
+                <div class="slide-indicators">
+                    <div class="indicator active" data-slide="0"></div>
+                    <div class="indicator" data-slide="1"></div>
+                    <div class="indicator" data-slide="2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de búsqueda -->
+        <section class="search-section">
+            <div class="search-box">
+                <div class="search-input">
+                    <label>Check-in</label>
+                    <input type="date" id="checkin-date">
+                </div>
+                <div class="search-input">
+                    <label>Check-out</label>
+                    <input type="date" id="checkout-date">
+                </div>
+                <div class="search-input">
+                    <label>Adultos</label>
+                    <select id="adults">
+                        <option value="1">1 adulto</option>
+                        <option value="2" selected>2 adultos</option>
+                        <option value="3">3 adultos</option>
+                        <option value="4">4 adultos</option>
+                        <option value="5">5 adultos</option>
+                        <option value="6">6 adultos</option>
+                    </select>
+                </div>
+                <div class="search-input">
+                    <label>Niños</label>
+                    <select id="children">
+                        <option value="0" selected>0 niños</option>
+                        <option value="1">1 niño</option>
+                        <option value="2">2 niños</option>
+                        <option value="3">3 niños</option>
+                    </select>
+                </div>
+                <button id="search-btn" class="btn-primary" onclick="performSearch()">Buscar Disponibilidad</button>
+            </div>
+        </section>
+
+        <!-- Sección Quiénes Somos -->
+        <section class="about-section" id="quienes-somos">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Quiénes Somos</h2>
+                    <p>En <strong>Morada Luna</strong> nos especializamos en ofrecer experiencias de alojamiento únicas y memorables en la Ciudad de México. Con años de experiencia en la industria hotelera, hemos creado espacios que combinan comodidad, estilo y la auténtica calidez mexicana.</p>
+                    <p>Nuestro equipo está comprometido con brindar un servicio personalizado, asegurando que cada huésped se sienta como en casa mientras explora los maravillosos rincones de la CDMX.</p>
+                    <p>Creemos que un buen alojamiento puede transformar un viaje en una experiencia inolvidable. Por eso, cada propiedad Morada Luna está cuidadosamente diseñada y equipada para superar tus expectativas.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop" alt="Interior Morada Luna">
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Servicios Minimalista -->
+        <section class="services-section" id="servicios">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <p class="section-subtitle">Todo lo que necesitas para una estancia perfecta en la Ciudad de México</p>
+            
+            <div class="services-grid-minimal">
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>WiFi de Alta Velocidad</h4>
+                        <p>Conexión rápida en todas las propiedades</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>Cocina Equipada</h4>
+                        <p>Electrodomésticos y utensilios completos</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>TV y Entretenimiento</h4>
+                        <p>Smart TV con plataformas de streaming</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>Recepción 24/7</h4>
+                        <p>Asistencia disponible todo el día</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-suitcase"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>Consigna de Equipajes</h4>
+                        <p>Almacenamiento seguro gratuito</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>Lavandería</h4>
+                        <p>Servicio por peso disponible</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>Limpieza Opcional</h4>
+                        <p>Servicios adicionales bajo solicitud</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>Transporte</h4>
+                        <p>Apoyo con Uber, Didi y recomendaciones</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-map-signs"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>Excursiones</h4>
+                        <p>Información y reservación de tours</p>
+                    </div>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon-mini">
+                        <i class="fas fa-couch"></i>
+                    </div>
+                    <div class="service-info">
+                        <h4>Sala de Estar</h4>
+                        <p>Espacios cómodos para relajarte</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Explora CDMX -->
+        <section class="explore-section" id="explora-cdmx">
+            <div class="explore-container">
+                <h2 class="section-title">Explora la Ciudad de México</h2>
+                <p class="section-subtitle">Descubre los lugares más emblemáticos y vivas la cultura mexicana durante tu estancia.</p>
+                
+                <div class="explore-grid">
+                    <div class="attraction-card">
+                        <img src="https://media.cntraveler.com/photos/5a92f25dc6516a534a5304e9/master/w_1024%2Cc_limit/Metropolitan-Cathedral_GettyImages-115006326.jpg" alt="Centro Histórico" class="attraction-image">
+                        <div class="attraction-content">
+                            <h3>Centro Histórico</h3>
+                            <p>Conoce la vibrante historia de Ciudad de México a través del Zócalo, la Catedral Metropolitana y el Palacio de Bellas Artes. Descubre sus museos, plazas y arquitectura colonial.</p>
+                            <span class="attraction-tag">Historia y Cultura</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <img src="https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/08/13235022/chapultepec-mexico-002.jpg" alt="Chapultepec" class="attraction-image">
+                        <div class="attraction-content">
+                            <h3>Parque de Chapultepec</h3>
+                            <p>Descubre la belleza del Bosque de Chapultepec y conoce la historia de México en el magnífico Castillo de Chapultepec. El parque urbano más grande de Latinoamérica.</p>
+                            <span class="attraction-tag">Naturaleza e Historia</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <img src="https://media.admagazine.com/photos/62dad7efef35b9d5f2a98871/16:9/w_2560%2Cc_limit/GettyImages-1125944655.jpg" alt="Frida Kahlo" class="attraction-image">
+                        <div class="attraction-content">
+                            <h3>Museo Frida Kahlo</h3>
+                            <p>Descubre la Casa Azul de Coyoacán, el antiguo hogar de Frida Kahlo. Explora su arte, su vida y el lugar donde floreció su creatividad. Un espacio íntimo y fascinante.</p>
+                            <span class="attraction-tag">Arte y Cultura</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <img src="https://mex-best.mx/wp-content/uploads/2025/07/21_ROMA-1536x1024-1.jpg" alt="La Roma" class="attraction-image">
+                        <div class="attraction-content">
+                            <h3>La Roma y La Condesa</h3>
+                            <p>Saborea los sabores mexicanos modernos y tradicionales en los barrios de moda de La Roma y La Condesa. Desde tacos callejeros hasta platos gourmet, cada rincón es un paraíso foodie.</p>
+                            <span class="attraction-tag">Gastronomía y Vida Nocturna</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <img src="https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/79D9/production/_99739113_gettyimages-73656849.jpg.webp" alt="Teotihuacán" class="attraction-image">
+                        <div class="attraction-content">
+                            <h3>Teotihuacán</h3>
+                            <p>A una hora de la ciudad, maravíllate con las imponentes pirámides del Sol y la Luna. Camina por la Calzada de los Muertos y descubre los secretos de esta antigua ciudad prehispánica.</p>
+                            <span class="attraction-tag">Arqueología y Aventura</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <img src="https://www.codigosanluis.com/wp-content/uploads/las-trajineras-de-xochimilco.jpg" alt="Xochimilco" class="attraction-image">
+                        <div class="attraction-content">
+                            <h3>Xochimilco</h3>
+                            <p>Navega por los coloridos canales en una trajinera tradicional, disfruta de música mariachi y comida típica. Este Patrimonio de la Humanidad es una experiencia única de tradición mexicana.</p>
+                            <span class="attraction-tag">Tradición y Naturaleza</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <p style="color: #666; font-size: 1.1rem; max-width: 800px; margin: 0 auto 1.5rem;">
+                        <i class="fas fa-lightbulb" style="color: #4a6fa5; margin-right: 10px;"></i>
+                        <strong>Tip de Morada Luna:</strong> ¿Necesitas recomendaciones personalizadas o ayuda para planificar tu itinerario? Nuestro equipo está listo para ayudarte.
+                    </p>
+                    <a href="https://wa.me/5215511406820?text=¡Hola! Necesito recomendaciones para mi viaje a CDMX" class="btn-secondary" target="_blank" style="text-decoration: none;">Solicitar Recomendaciones</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de propiedades -->
+        <section class="properties-section" id="propiedades">
+            <h2 class="section-title">Nuestros Alojamientos</h2>
+            <div id="properties-grid" class="properties-grid">
+                <!-- Propiedad 1 -->
+                <div class="property-card" onclick="openWhatsApp('Linda Habitación en Roma Morada Luna')">
+                    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1270521288480613949/original/9a10b18c-7b51-4fb1-82b0-1923e0d799ea.jpeg?im_w=720" alt="Linda Habitación en Roma Morada Luna">
+                    <div class="property-content">
+                        <h3>Linda Habitación en Roma Morada Luna</h3>
+                        <div class="property-meta">
+                            <span><i class="fas fa-users"></i> 2 personas</span>
+                            <span><i class="fas fa-bed"></i> 1 cama</span>
+                            <span><i class="fas fa-bath"></i> 1 baño</span>
+                        </div>
+                        <p class="property-description">Acogedora habitación privada en el corazón de La Roma. Perfecta para parejas o viajeros solitarios que buscan comodidad y estilo.</p>
+                        <div class="property-price">
+                            <div>
+                                <span class="price">$850 <span class="price-currency">MXN/noche</span></span>
+                            </div>
+                            <div class="btn-secondary" onclick="event.stopPropagation(); openWhatsApp('Linda Habitación en Roma Morada Luna')">Consultar Disponibilidad</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Propiedad 2 -->
+                <div class="property-card" onclick="openWhatsApp('Linda Habitación en Roma Morada Luna 202')">
+                    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1270521288480613949/original/9a10b18c-7b51-4fb1-82b0-1923e0d799ea.jpeg?im_w=720" alt="Linda Habitación en Roma Morada Luna 202">
+                    <div class="property-content">
+                        <h3>Linda Habitación en Roma Morada Luna 202</h3>
+                        <div class="property-meta">
+                            <span><i class="fas fa-users"></i> 2 personas</span>
+                            <span><i class="fas fa-bed"></i> 1 cama</span>
+                            <span><i class="fas fa-bath"></i> Baño compartido</span>
+                        </div>
+                        <p class="property-description">Habitación confortable con decoración moderna en nuestra propiedad de La Roma. Incluye acceso a áreas comunes y cocina.</p>
+                        <div class="property-price">
+                            <div>
+                                <span class="price">$750 <span class="price-currency">MXN/noche</span></span>
+                            </div>
+                            <div class="btn-secondary" onclick="event.stopPropagation(); openWhatsApp('Linda Habitación en Roma Morada Luna 202')">Consultar Disponibilidad</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Propiedad 3 -->
+                <div class="property-card" onclick="openWhatsApp('Linda habitación en Roma Morada Luna 206')">
+                    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1270521288480613949/original/9a10b18c-7b51-4fb1-82b0-1923e0d799ea.jpeg?im_w=720" alt="Linda habitación en Roma Morada Luna 206">
+                    <div class="property-content">
+                        <h3>Linda habitación en Roma Morada Luna 206</h3>
+                        <div class="property-meta">
+                            <span><i class="fas fa-users"></i> 2 personas</span>
+                            <span><i class="fas fa-bed"></i> 1 cama</span>
+                            <span><i class="fas fa-bath"></i> Baño privado</span>
+                        </div>
+                        <p class="property-description">Habitación luminosa con baño privado en nuestra propiedad de La Roma. Ideal para quienes buscan privacidad y confort.</p>
+                        <div class="property-price">
+                            <div>
+                                <span class="price">$950 <span class="price-currency">MXN/noche</span></span>
+                            </div>
+                            <div class="btn-secondary" onclick="event.stopPropagation(); openWhatsApp('Linda habitación en Roma Morada Luna 206')">Consultar Disponibilidad</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de sucursales -->
+        <section class="branches-section" id="sucursales">
+            <h2 class="section-title">Nuestras Sucursales</h2>
+            <p class="section-subtitle">Descubre todas nuestras propiedades en la Ciudad de México</p>
+            
+            <div class="branches-grid">
+                <div class="branch-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb Logo" class="branch-logo">
+                    <h3>Morada Luna en Airbnb</h3>
+                    <p>Explora todas nuestras propiedades disponibles en Airbnb. Desde habitaciones privadas hasta departamentos completos, encuentra el alojamiento perfecto para tu estancia en CDMX.</p>
+                    <a href="https://www.airbnb.mx/users/show/156455377" class="btn-secondary" target="_blank">Ver en Airbnb</a>
+                </div>
+                
+                <div class="branch-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Booking.com_logo.svg/2560px-Booking.com_logo.svg.png" alt="Booking.com Logo" class="branch-logo" style="height: 40px;">
+                    <h3>Morada Luna Polanco</h3>
+                    <p>Nuestra exclusiva propiedad en Polanco, uno de los barrios más elegantes de la Ciudad de México. Disfruta de lujo, comodidad y la mejor ubicación para explorar la ciudad.</p>
+                    <a href="https://www.booking.com/hotel/mx/casa-luna-morada-polanco-ciudad-de-mexico.es.html?aid=356980&label=gog235jc-10CAsooAFCKWNhc2EtbHVuYS1tb3JhZGEtcG9sYW5jby1jaXVkYWQtZGUtbWV4aWNvSFJYA2igAYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCoMHhygbAAgHSAiQ0NzAwZDI0Zi1jMjkyLTQxZDYtYTQwOC1kYjM0ZGRkNjAxZWHYAgHgAgE&sid=447cb424076e92cc2a82dfc4df49c121&dist=0&keep_landing=1&sb_price_type=total&type=total&" class="btn-secondary" target="_blank">Reservar en Booking</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Reserva (inicialmente oculta) -->
+        <section id="booking-details" class="hidden">
+            <div class="properties-section">
+                <h2 class="section-title">Detalles de la Reserva</h2>
+                <div class="booking-container">
+                    <div class="property-details">
+                        <img id="property-image" src="" alt="" style="width: 100%; height: 350px; object-fit: cover; border-radius: 15px; margin-bottom: 1.5rem;">
+                        <h3 id="property-title" style="color: #4a6fa5; font-size: 1.8rem; margin-bottom: 1rem;"></h3>
+                        <div class="property-info" style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <span><i class="fas fa-users"></i> <span id="property-guests"></span> personas</span>
+                            <span><i class="fas fa-ruler-combined"></i> <span id="property-size"></span> m²</span>
+                            <span><i class="fas fa-bed"></i> <span id="property-beds"></span> camas</span>
+                        </div>
+                        <div id="property-amenities" class="amenities-grid"></div>
+                        
+                        <div class="calendar">
+                            <h3>Disponibilidad - Febrero 2026</h3>
+                            <div class="calendar-grid">
+                                <div class="calendar-day-header">Lun</div>
+                                <div class="calendar-day-header">Mar</div>
+                                <div class="calendar-day-header">Mié</div>
+                                <div class="calendar-day-header">Jue</div>
+                                <div class="calendar-day-header">Vie</div>
+                                <div class="calendar-day-header">Sáb</div>
+                                <div class="calendar-day-header">Dom</div>
+                                
+                                <!-- Semana 1 -->
+                                <div class="calendar-day">1</div>
+                                <div class="calendar-day">2</div>
+                                <div class="calendar-day">3</div>
+                                <div class="calendar-day">4</div>
+                                <div class="calendar-day available">5</div>
+                                <div class="calendar-day available">6</div>
+                                <div class="calendar-day available">7</div>
+                                
+                                <!-- Semana 2 -->
+                                <div class="calendar-day available">8</div>
+                                <div class="calendar-day available">9</div>
+                                <div class="calendar-day booked">10</div>
+                                <div class="calendar-day booked">11</div>
+                                <div class="calendar-day available">12</div>
+                                <div class="calendar-day available">13</div>
+                                <div class="calendar-day available">14</div>
+                                
+                                <!-- Semana 3 -->
+                                <div class="calendar-day available">15</div>
+                                <div class="calendar-day available">16</div>
+                                <div class="calendar-day booked">17</div>
+                                <div class="calendar-day booked">18</div>
+                                <div class="calendar-day booked">19</div>
+                                <div class="calendar-day available">20</div>
+                                <div class="calendar-day available">21</div>
+                            </div>
+                            <div class="calendar-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: #e8f5e9;"></div>
+                                    <span>Disponible</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: #ffebee;"></div>
+                                    <span>Reservado</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-form">
+                        <h3>Completar Reserva</h3>
+                        <form id="booking-form" onsubmit="event.preventDefault(); submitBooking();">
+                            <div class="form-group">
+                                <label>Nombre Completo</label>
+                                <input type="text" id="guest-name" required value="Juan Pérez (Demo)">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="guest-email" required value="demo@moradaluna.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="tel" id="guest-phone" required value="+52 55 1140 6820">
+                            </div>
+                            <div class="form-group">
+                                <label>Check-in</label>
+                                <div class="info-text" id="selected-checkin">2026-02-05</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Check-out</label>
+                                <div class="info-text" id="selected-checkout">2026-02-09</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Huéspedes</label>
+                                <div class="info-text" id="selected-guests">2 adultos, 0 niños</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Total a pagar</label>
+                                <div class="info-text" id="total-price" style="color: #ff5a5f; font-size: 1.3rem;">$3,400 MXN (4 noches)</div>
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%;">Confirmar Reserva</button>
+                            <button type="button" class="btn-secondary" onclick="goBackToProperties()" style="width: 100%; margin-top: 1rem;">Ver más propiedades</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="https://scontent.fmex5-1.fna.fbcdn.net/v/t39.30808-6/429783676_900322278460845_1861502284872160379_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGF3_BWjafA2VavRUzGpAIKZDIuEIjgjXJkMi4QiOCNcoOr8enbBcsWY0NrN-d2sxw&_nc_ohc=XUZHKRoXimYQ7kNvwH7EwJM&_nc_oc=AdkOOB9PZXASWfCRoSgxTiu3JAG9j-azOn3QYqU0L0PyZs_Keyb4bdjoow-myw4bwhIyzznYkbWHCVpBDCdPFdHX&_nc_zt=23&_nc_ht=scontent.fmex5-1.fna&_nc_gid=Ko4vfdFJAakf025Ray9iyw&oh=00_Afoj8vD2ivy-03mxEXzQxiqoeaBvwK5EMWvaejB3UwHNJQ&oe=695E219E" 
+                     alt="Logo Morada Luna" class="logo">
+                <p style="color: #ddd; line-height: 1.6;">Tu refugio perfecto bajo la luna. Ofrecemos experiencias únicas de alojamiento en los mejores destinos de México.</p>
+                
+                <div class="partner-logos">
+                    <a href="https://www.airbnb.mx/users/show/156455377" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb" class="partner-logo" style="height: 30px;">
+                    </a>
+                    <a href="https://www.booking.com/hotel/mx/casa-luna-morada-polanco-ciudad-de-mexico.es.html" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Booking.com_logo.svg/2560px-Booking.com_logo.svg.png" alt="Booking.com" class="partner-logo" style="height: 25px;">
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#quienes-somos">Quiénes Somos</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#explora-cdmx">Explora CDMX</a></li>
+                    <li><a href="#propiedades">Propiedades</a></li>
+                    <li><a href="#sucursales">Sucursales</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h4>Contacto</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Teléfono: 55 1140 6820</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp: 55 1140 6820</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email: info@moradaluna.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Ciudad de México, México</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <h4>Síguenos</h4>
+                <p style="color: #ddd; margin-bottom: 1rem;">Síguenos en nuestras redes sociales para ofertas especiales y novedades.</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/hotelitomoradaluna/" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/p/Morada-Luna-100054492428152/?locale=es_LA" target="_blank" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://wa.me/5215511406820" target="_blank" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 Morada Luna. Todos los derechos reservados.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Sistema de reservas conectado con Supabase | Precios en pesos mexicanos ($ MXN)</p>
+        </div>
+    </footer>
+
+    <script>
+        // Datos de las propiedades (actualizados con nombres reales)
+        const properties = {
+            1: {
+                id: 1,
+                name: "Linda Habitación en Roma Morada Luna",
+                description: "Acogedora habitación privada en el corazón de La Roma. Perfecta para parejas o viajeros solitarios que buscan comodidad y estilo.",
+                max_guests: 2,
+                bedrooms: 1,
+                beds: 1,
+                bathrooms: 1,
+                square_meters: 25,
+                price_per_night: 850,
+                amenities: ["WiFi", "TV", "Aire acondicionado", "Ropa de cama", "Toallas"],
+                image: "https://a0.muscache.com/im/pictures/hosting/Hosting-1270521288480613949/original/9a10b18c-7b51-4fb1-82b0-1923e0d799ea.jpeg?im_w=720"
+            },
+            2: {
+                id: 2,
+                name: "Linda Habitación en Roma Morada Luna 202",
+                description: "Habitación confortable con decoración moderna en nuestra propiedad de La Roma. Incluye acceso a áreas comunes y cocina.",
+                max_guests: 2,
+                bedrooms: 1,
+                beds: 1,
+                bathrooms: 0, // compartido
+                square_meters: 22,
+                price_per_night: 750,
+                amenities: ["WiFi", "Acceso a cocina", "Áreas comunes", "Ropa de cama", "Toallas"],
+                image: "https://a0.muscache.com/im/pictures/hosting/Hosting-1270521288480613949/original/9a10b18c-7b51-4fb1-82b0-1923e0d799ea.jpeg?im_w=720"
+            },
+            3: {
+                id: 3,
+                name: "Linda habitación en Roma Morada Luna 206",
+                description: "Habitación luminosa con baño privado en nuestra propiedad de La Roma. Ideal para quienes buscan privacidad y confort.",
+                max_guests: 2,
+                bedrooms: 1,
+                beds: 1,
+                bathrooms: 1,
+                square_meters: 28,
+                price_per_night: 950,
+                amenities: ["WiFi", "TV", "Baño privado", "Aire acondicionado", "Ropa de cama", "Toallas"],
+                image: "https://a0.muscache.com/im/pictures/hosting/Hosting-1270521288480613949/original/9a10b18c-7b51-4fb1-82b0-1923e0d799ea.jpeg?im_w=720"
+            }
+        };
+
+        // Variables globales
+        let selectedPropertyId = null;
+        let currentSearch = {
+            checkIn: '2026-02-05',
+            checkOut: '2026-02-09',
+            adults: 2,
+            children: 0
+        };
+
+        // Variables para slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        let slideInterval;
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            setDefaultDates();
+            setupEventListeners();
+            updateWhatsAppButton();
+            startSlideshow();
+            
+            // Suavizar scroll a las secciones
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Slideshow functions
+        function startSlideshow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        }
+
+        function updateSlide() {
+            // Remove active class from all slides and indicators
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // Add active class to current slide and indicator
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+
+        // Add click events to indicators
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlide();
+                // Reset interval
+                clearInterval(slideInterval);
+                startSlideshow();
+            });
+        });
+
+        // WhatsApp functions
+        function openWhatsApp(propertyName) {
+            const message = encodeURIComponent(`¡Hola! Estoy interesado en la propiedad "${propertyName}". ¿Podrían darme más información sobre disponibilidad y precios?`);
+            window.open(`https://wa.me/5215511406820?text=${message}`, '_blank');
+        }
+
+        function setDefaultDates() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            // Formatear fechas para input type="date"
+            const formatDate = (date) => date.toISOString().split('T')[0];
+            
+            document.getElementById('checkin-date').value = formatDate(today);
+            document.getElementById('checkout-date').value = formatDate(tomorrow);
+            
+            currentSearch.checkIn = formatDate(today);
+            currentSearch.checkOut = formatDate(tomorrow);
+        }
+
+        function setupEventListeners() {
+            // Actualizar check-out mínimo cuando cambia check-in
+            document.getElementById('checkin-date').addEventListener('change', function(e) {
+                currentSearch.checkIn = e.target.value;
+                
+                // Establecer mínimo para check-out
+                const checkoutInput = document.getElementById('checkout-date');
+                const minDate = new Date(e.target.value);
+                minDate.setDate(minDate.getDate() + 1);
+                checkoutInput.min = minDate.toISOString().split('T')[0];
+                
+                // Si check-out es anterior al nuevo mínimo, resetear
+                if (checkoutInput.value && new Date(checkoutInput.value) <= new Date(e.target.value)) {
+                    checkoutInput.value = '';
+                    currentSearch.checkOut = '';
+                }
+            });
+            
+            document.getElementById('checkout-date').addEventListener('change', function(e) {
+                currentSearch.checkOut = e.target.value;
+            });
+            
+            document.getElementById('adults').addEventListener('change', function(e) {
+                currentSearch.adults = parseInt(e.target.value);
+            });
+            
+            document.getElementById('children').addEventListener('change', function(e) {
+                currentSearch.children = parseInt(e.target.value);
+            });
+        }
+
+        // Actualizar el botón de WhatsApp con mensaje personalizado
+        function updateWhatsAppButton() {
+            const whatsappButton = document.getElementById('whatsappButton');
+            const message = encodeURIComponent("¡Hola! Vi su página de Morada Luna y tengo algunas preguntas sobre las propiedades disponibles.");
+            whatsappButton.href = `https://wa.me/5215511406820?text=${message}`;
+        }
+
+        function performSearch() {
+            const checkIn = document.getElementById('checkin-date').value;
+            const checkOut = document.getElementById('checkout-date').value;
+            const adults = parseInt(document.getElementById('adults').value);
+            const children = parseInt(document.getElementById('children').value);
+            
+            // Validaciones
+            if (!checkIn || !checkOut) {
+                alert('Por favor, selecciona fechas de check-in y check-out');
+                return;
+            }
+            
+            if (new Date(checkIn) >= new Date(checkOut)) {
+                alert('La fecha de check-out debe ser posterior al check-in');
+                return;
+            }
+            
+            currentSearch = { checkIn, checkOut, adults, children };
+            
+            // Simular búsqueda
+            alert(`Buscando disponibilidad para:\n${checkIn} al ${checkOut}\n${adults} adultos, ${children} niños\n\n(En producción, esto consultaría la base de datos Supabase)`);
+            
+            // En una implementación real, aquí se filtrarían las propiedades disponibles
+        }
+
+        function selectProperty(propertyId) {
+            selectedPropertyId = propertyId;
+            const property = properties[propertyId];
+            
+            if (!property) return;
+            
+            // Ocultar lista de propiedades, mostrar detalles de reserva
+            document.getElementById('propiedades').classList.add('hidden');
+            document.getElementById('booking-details').classList.remove('hidden');
+            
+            // Actualizar detalles de la propiedad
+            document.getElementById('property-title').textContent = property.name;
+            document.getElementById('property-guests').textContent = property.max_guests;
+            document.getElementById('property-size').textContent = property.square_meters;
+            document.getElementById('property-beds').textContent = property.beds;
+            document.getElementById('property-image').src = property.image;
+            document.getElementById('property-image').alt = property.name;
+            
+            // Actualizar amenities
+            const amenitiesContainer = document.getElementById('property-amenities');
+            amenitiesContainer.innerHTML = '';
+            
+            property.amenities.forEach(amenity => {
+                const span = document.createElement('span');
+                span.className = 'amenity';
+                span.textContent = amenity;
+                amenitiesContainer.appendChild(span);
+            });
+            
+            // Actualizar detalles de la reserva
+            document.getElementById('selected-checkin').textContent = currentSearch.checkIn;
+            document.getElementById('selected-checkout').textContent = currentSearch.checkOut;
+            document.getElementById('selected-guests').textContent = 
+                `${currentSearch.adults} adultos, ${currentSearch.children} niños`;
+            
+            // Calcular precio
+            calculateTotalPrice(property);
+            
+            // Scroll a la sección de reserva
+            document.getElementById('booking-details').scrollIntoView({ behavior: 'smooth' });
+            
+            // Actualizar botón de WhatsApp para esta propiedad
+            updateWhatsAppForProperty(property);
+        }
+
+        function calculateTotalPrice(property) {
+            if (!currentSearch.checkIn || !currentSearch.checkOut) return;
+            
+            const checkIn = new Date(currentSearch.checkIn);
+            const checkOut = new Date(currentSearch.checkOut);
+            const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+            
+            const total = nights * property.price_per_night;
+            
+            // Formatear con separadores de miles
+            const formattedTotal = total.toLocaleString('es-MX');
+            
+            document.getElementById('total-price').textContent = 
+                `$${formattedTotal} MXN (${nights} noches)`;
+        }
+
+        function updateWhatsAppForProperty(property) {
+            const whatsappButton = document.getElementById('whatsappButton');
+            const message = encodeURIComponent(
+                `¡Hola! Estoy interesado en reservar "${property.name}" del ${currentSearch.checkIn} al ${currentSearch.checkOut}. ¿Podrían darme más información?`
+            );
+            whatsappButton.href = `https://wa.me/5215511406820?text=${message}`;
+        }
+
+        function submitBooking() {
+            if (!selectedPropertyId) {
+                alert('Por favor, selecciona una propiedad primero');
+                return;
+            }
+            
+            const property = properties[selectedPropertyId];
+            const guestName = document.getElementById('guest-name').value;
+            const guestEmail = document.getElementById('guest-email').value;
+            
+            // Calcular noches
+            const checkIn = new Date(currentSearch.checkIn);
+            const checkOut = new Date(currentSearch.checkOut);
+            const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+            const total = nights * property.price_per_night;
+            const formattedTotal = total.toLocaleString('es-MX');
+            
+            // Simular envío a Supabase
+            alert(`🎉 ¡Reserva confirmada!\n\nPropiedad: ${property.name}\nFechas: ${currentSearch.checkIn} al ${currentSearch.checkOut}\nHuéspedes: ${guestName}\nEmail: ${guestEmail}\nTotal: $${formattedTotal} MXN\n\nEn producción, estos datos se guardarían en Supabase y se enviaría un email de confirmación.`);
+            
+            // Resetear formulario
+            document.getElementById('booking-form').reset();
+            
+            // Volver a propiedades
+            goBackToProperties();
+        }
+
+        function goBackToProperties() {
+            document.getElementById('booking-details').classList.add('hidden');
+            document.getElementById('propiedades').classList.remove('hidden');
+            document.getElementById('propiedades').scrollIntoView({ behavior: 'smooth' });
+            
+            // Restaurar botón de WhatsApp general
+            updateWhatsAppButton();
+        }
+    </script>
+</body>
+</html>
