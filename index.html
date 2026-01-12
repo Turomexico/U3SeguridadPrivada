@@ -92,6 +92,34 @@
             width: 100%;
         }
 
+        /* Nuevo botón FIFA 2026™ */
+        .nav-links .fifa-btn {
+            background: linear-gradient(45deg, #0033a0, #ce1126);
+            color: white !important;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            animation: fifaPulse 3s infinite;
+        }
+
+        .nav-links .fifa-btn:hover {
+            background: linear-gradient(45deg, #002080, #a00d1e);
+            transform: scale(1.05);
+        }
+
+        .nav-links .fifa-btn::after {
+            display: none;
+        }
+
+        @keyframes fifaPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(0, 51, 160, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(0, 51, 160, 0);
+            }
+        }
+
         /* Banner hero con slideshow */
         .hero-banner {
             width: 100%;
@@ -399,10 +427,36 @@
             cursor: pointer;
             transition: background-color 0.3s;
             align-self: end;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary:hover {
             background-color: #e04a50;
+        }
+
+        /* Animación de búsqueda */
+        @keyframes searchAnimation {
+            0% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.05);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .searching {
+            animation: searchAnimation 4s ease-in-out;
+            background-color: #4a6fa5 !important;
         }
 
         /* Sección Quiénes Somos */
@@ -605,6 +659,321 @@
             border-radius: 6px;
             border-left: 3px solid #4a6fa5;
             margin-top: auto;
+        }
+
+        /* Sección FIFA 2026™ */
+        .fifa-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .fifa-modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.5s ease-out;
+        }
+
+        .fifa-header {
+            background: linear-gradient(45deg, #0033a0, #ce1126);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fifa-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://upload.wikimedia.org/wikipedia/en/thumb/6/67/2026_FIFA_World_Cup.svg/1200px-2026_FIFA_World_Cup.svg.png') center/contain no-repeat;
+            opacity: 0.1;
+        }
+
+        .fifa-header h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .fifa-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .fifa-body {
+            padding: 3rem 2rem;
+        }
+
+        .fifa-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #0033a0;
+            border-right: 5px solid #ce1126;
+        }
+
+        .fifa-intro h3 {
+            color: #0033a0;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .fifa-intro p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .fifa-players {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .player-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .player-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .player-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 3px solid #0033a0;
+        }
+
+        .player-info {
+            padding: 1.5rem;
+        }
+
+        .player-info h4 {
+            color: #0033a0;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .player-info p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .fifa-schedule {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            border: 2px solid #0033a0;
+        }
+
+        .fifa-schedule h3 {
+            color: #0033a0;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .match-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #ce1126;
+        }
+
+        .match-date {
+            color: #0033a0;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .match-date i {
+            color: #ce1126;
+        }
+
+        .match-info {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .stadium-info {
+            background: #0033a0;
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .stadium-info i {
+            font-size: 2rem;
+            color: #ffd700;
+        }
+
+        .stadium-details h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .fifa-amenities {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: #fff5f5;
+            border-radius: 15px;
+            border: 2px solid #ce1126;
+        }
+
+        .fifa-amenities h3 {
+            color: #ce1126;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .amenity-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #0033a0, #ce1126);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .amenity-text h4 {
+            color: #0033a0;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .fifa-cta {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(45deg, #0033a0, #ce1126);
+            color: white;
+            border-radius: 15px;
+            margin-top: 3rem;
+        }
+
+        .fifa-cta h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .fifa-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-fifa {
+            background: white;
+            color: #0033a0;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-fifa:hover {
+            background: #ffd700;
+            transform: scale(1.05);
+            color: #ce1126;
+        }
+
+        .close-fifa {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+
+        .close-fifa:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* Sección Explora CDMX */
@@ -885,7 +1254,7 @@
             background: linear-gradient(145deg, #FF5A5F, #E04A50);
         }
 
-        /* Estilo para icono de soporte técnico - MEJORADO */
+        /* Estilo para icono de soporte técnico - MEJORADO CON ICONO */
         .social-icons a.tech-support {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
             position: relative;
@@ -895,15 +1264,8 @@
             background: linear-gradient(145deg, #3498db, #2980b9);
         }
 
-        .social-icons a.tech-support img {
-            width: 24px;
-            height: 24px;
-            filter: brightness(0) invert(1);
-            transition: filter 0.3s;
-        }
-
-        .social-icons a.tech-support:hover img {
-            filter: brightness(0) invert(1);
+        .social-icons a.tech-support i {
+            font-size: 1.3rem;
         }
 
         .footer-bottom {
@@ -915,7 +1277,8 @@
             margin-left: auto;
             margin-right: auto;
             font-size: 0.9rem;
-            opacity: 0.8;
+            opacity: 0.9;
+            color: #fff;
         }
 
         /* Responsive */
@@ -934,6 +1297,14 @@
             }
             
             .reviews-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .fifa-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .fifa-players {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -1003,6 +1374,22 @@
             .social-icons {
                 justify-content: center;
             }
+            
+            .fifa-header h2 {
+                font-size: 2rem;
+            }
+            
+            .fifa-header p {
+                font-size: 1rem;
+            }
+            
+            .fifa-players {
+                grid-template-columns: 1fr;
+            }
+            
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1040,9 +1427,16 @@
                 font-size: 1.2rem;
             }
             
-            .social-icons a.tech-support img {
-                width: 20px;
-                height: 20px;
+            .fifa-body {
+                padding: 2rem 1rem;
+            }
+            
+            .fifa-intro {
+                padding: 1.5rem;
+            }
+            
+            .fifa-cta {
+                padding: 2rem 1rem;
             }
         }
     </style>
@@ -1059,6 +1453,204 @@
                 <span>Morada Luna - Atención al Cliente</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
+        </div>
+    </div>
+
+    <!-- FIFA 2026™ Modal -->
+    <div class="fifa-modal" id="fifaModal">
+        <div class="fifa-modal-content">
+            <button class="close-fifa" id="closeFifa">&times;</button>
+            <div class="fifa-header">
+                <h2>FIFA 2026™</h2>
+                <p>¡Morada Luna está listo para el Mundial de Fútbol en Ciudad de México!</p>
+            </div>
+            
+            <div class="fifa-body">
+                <div class="fifa-intro">
+                    <h3>¡Bienvenidos al Mundial FIFA 2026 en México!</h3>
+                    <p>En <strong>Morada Luna</strong> estamos emocionados de recibir a los aficionados de fútbol de todo el mundo. Ciudad de México será una de las sedes principales del torneo más grande del planeta, y nuestros alojamientos están perfectamente preparados para ofrecerte la mejor experiencia durante tu estadía.</p>
+                    <p>Contamos con todas las amenidades necesarias para que disfrutes de los partidos en un ambiente cómodo, seguro y con el auténtico espíritu mexicano.</p>
+                </div>
+
+                <!-- Jugadores Estelares -->
+                <div class="section-title">
+                    <h3>Estrellas del Mundial 2026</h3>
+                    <p>Los mejores jugadores del mundo llegarán a México</p>
+                </div>
+                
+                <div class="fifa-players">
+                    <div class="player-card">
+                        <img src="https://media.cnn.com/api/v1/images/stellar/prod/231112093254-01-lionel-messi-the-best-awards.jpg?c=16x9&q=h_720,w_1280,c_fill" alt="Lionel Messi" class="player-image">
+                        <div class="player-info">
+                            <h4>Lionel Messi</h4>
+                            <p>8 veces Balón de Oro, campeón del Mundial 2022. Posiblemente su último mundial.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <img src="https://assets.goal.com/images/v3/blt19ce7b4d9005330e/CR7.jpg?auto=webp&format=pjpg&width=3840&quality=60" alt="Cristiano Ronaldo" class="player-image">
+                        <div class="player-info">
+                            <h4>Cristiano Ronaldo</h4>
+                            <p>5 veces Balón de Oro, máximo goleador histórico. Buscará su primer mundial.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <img src="https://phantom-marca.unidadeditorial.es/2d189dcfb252a0ff3fa74aa86b2e7a6d/resize/828/f/jpg/assets/multimedia/imagenes/2023/11/13/16998826582725.jpg" alt="Kylian Mbappé" class="player-image">
+                        <div class="player-info">
+                            <h4>Kylian Mbappé</h4>
+                            <p>Campeón del mundo 2018, estrella emergente y futuro del fútbol mundial.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <img src="https://images2.minutemediacdn.com/image/upload/c_crop,w_5333,h_3000,x_0,y_271/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/images/GettyImages/mmsport/90min_en_international_web/01h2c4hk4kdz2rcqv3cq.jpg" alt="Erling Haaland" class="player-image">
+                        <div class="player-info">
+                            <h4>Erling Haaland</h4>
+                            <p>Máquina goleadora noruega, uno de los jugadores más temidos del planeta.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendario de Partidos en México -->
+                <div class="fifa-schedule">
+                    <h3>🗓️ Calendario de Partidos en Ciudad de México</h3>
+                    <p style="text-align: center; margin-bottom: 2rem; color: #0033a0; font-weight: bold;">Información Oficial FIFA - Partidos en el Estadio Azteca</p>
+                    
+                    <div class="schedule-grid">
+                        <div class="match-card">
+                            <div class="match-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>11 de Junio 2026</span>
+                            </div>
+                            <div class="match-info">
+                                <p><strong>Partido Inaugural Grupo A</strong></p>
+                                <p>México vs. Rival por Definir</p>
+                                <p><strong>Horario:</strong> 12:00 PM (Hora Local)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="match-card">
+                            <div class="match-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>18 de Junio 2026</span>
+                            </div>
+                            <div class="match-info">
+                                <p><strong>Octavos de Final</strong></p>
+                                <p>Partido 1 - Ganador Grupo B vs. Segundo Grupo A</p>
+                                <p><strong>Horario:</strong> 16:00 PM (Hora Local)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="match-card">
+                            <div class="match-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>25 de Junio 2026</span>
+                            </div>
+                            <div class="match-info">
+                                <p><strong>Cuartos de Final</strong></p>
+                                <p>Partido 3 - Cruce importante</p>
+                                <p><strong>Horario:</strong> 20:00 PM (Hora Local)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="match-card">
+                            <div class="match-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>3 de Julio 2026</span>
+                            </div>
+                            <div class="match-info">
+                                <p><strong>Semifinal</strong></p>
+                                <p>Uno de los partidos más importantes del torneo</p>
+                                <p><strong>Horario:</strong> 19:00 PM (Hora Local)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stadium-info">
+                        <i class="fas fa-futbol"></i>
+                        <div class="stadium-details">
+                            <h4>🏟️ Estadio Azteca - Ciudad de México</h4>
+                            <p><strong>Capacidad:</strong> 87,000 espectadores</p>
+                            <p><strong>Historial:</strong> Sede de 2 finales de Copa del Mundo (1970 y 1986)</p>
+                            <p><strong>Dirección:</strong> Calz. de Tlalpan 3465, Santa Ursula Coapa, 04650 Ciudad de México</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amenidades Especiales para el Mundial -->
+                <div class="fifa-amenities">
+                    <h3>🏆 Amenidades Especiales para Huéspedes del Mundial</h3>
+                    <div class="amenities-grid">
+                        <div class="amenity-item">
+                            <div class="amenity-icon">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <div class="amenity-text">
+                                <h4>Pantallas 4K</h4>
+                                <p>TVs de 55" con todos los canales deportivos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-item">
+                            <div class="amenity-icon">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="amenity-text">
+                                <h4>WiFi 5G Ultra Rápido</h4>
+                                <p>Para streaming sin interrupciones</p>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-item">
+                            <div class="amenity-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="amenity-text">
+                                <h4>Servicio de Catering</h4>
+                                <p>Menú especial para partidos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-item">
+                            <div class="amenity-icon">
+                                <i class="fas fa-shuttle-van"></i>
+                            </div>
+                            <div class="amenity-text">
+                                <h4>Transporte al Estadio</h4>
+                                <p>Shuttles directos al Azteca</p>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-item">
+                            <div class="amenity-icon">
+                                <i class="fas fa-concierge-bell"></i>
+                            </div>
+                            <div class="amenity-text">
+                                <h4>Guías Turísticos</h4>
+                                <p>Experiencias futboleras en CDMX</p>
+                            </div>
+                        </div>
+                        
+                        <div class="amenity-item">
+                            <div class="amenity-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="amenity-text">
+                                <h4>Áreas Sociales</h4>
+                                <p>Para ver partidos con otros fanáticos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Final -->
+                <div class="fifa-cta">
+                    <h3>¡Reserva Tu Estancia para el Mundial 2026!</h3>
+                    <p>Las reservas para el período del mundial ya están abiertas. Asegura tu alojamiento en la mejor ubicación de Ciudad de México para vivir la experiencia futbolera más grande del planeta.</p>
+                    <button class="btn-fifa" onclick="openWhatsApp('Reserva para FIFA 2026™')">Reservar Ahora</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1083,6 +1675,7 @@
                 <li><a href="#explora-cdmx">Explora CDMX</a></li>
                 <li><a href="#propiedades">Propiedades</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#" class="fifa-btn" id="fifaBtn">FIFA 2026™</a></li>
             </ul>
         </nav>
     </header>
@@ -1201,7 +1794,7 @@
                     </div>
                     <div class="service-info">
                         <h4>TV y Entretenimiento</h4>
-                        <p>Smart TV compatible con plataformas de streaming</p>
+                        <p>Smart TV con plataformas de streaming</p>
                     </div>
                 </div>
                 
@@ -1251,7 +1844,7 @@
                     </div>
                     <div class="service-info">
                         <h4>Transporte</h4>
-                        <p>Apoyo con Uber, Didi y Recomendaciones</p>
+                        <p>Apoyo con Uber, Didi y recomendaciones</p>
                     </div>
                 </div>
                 
@@ -1356,7 +1949,7 @@
                         <i class="fas fa-lightbulb" style="color: #4a6fa5; margin-right: 10px;"></i>
                         <strong>Tip de Morada Luna:</strong> Haz clic en cualquier imagen para tener información sobre ese lugar en Google/Maps.
                     </p>
-                    <a href="https://wa.me/5215511406820?text=¡Hola! Necesito recomendaciones Turisticas cercanas para mi viaje a CDMX con ustedes." class="btn-visit" target="_blank" style="text-decoration: none;">Solicitar Recomendaciones Turisticas</a>
+                    <a href="https://wa.me/5215511406820?text=¡Hola! Necesito recomendaciones para mi viaje a CDMX" class="btn-visit" target="_blank" style="text-decoration: none;">Solicitar Recomendaciones</a>
                 </div>
             </div>
         </section>
@@ -1471,14 +2064,14 @@
                        target="_blank" 
                        title="Soporte Técnico"
                        class="tech-support">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2333/2333501.png">
+                        <i class="fas fa-tools"></i>
                     </a>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>Página de prueba de reservas para servicios digitales de hospedaje hecho por Arturo</p>
+            <p>© 2026 Morada Luna una empresa de Hospedaje. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -1556,6 +2149,7 @@
             setupEventListeners();
             startSlideshow();
             setupWhatsAppModal();
+            setupFIFAModal();
             initReviewsGrid();
             
             // Suavizar scroll a las secciones
@@ -1600,6 +2194,34 @@
             whatsappModal.addEventListener('click', function(e) {
                 if (e.target === whatsappModal) {
                     whatsappModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Configurar modal FIFA 2026™
+        function setupFIFAModal() {
+            const fifaBtn = document.getElementById('fifaBtn');
+            const fifaModal = document.getElementById('fifaModal');
+            const closeFifa = document.getElementById('closeFifa');
+
+            // Abrir modal al hacer clic en el botón FIFA
+            fifaBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                fifaModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Cerrar modal
+            closeFifa.addEventListener('click', function() {
+                fifaModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Cerrar modal al hacer clic fuera del contenido
+            fifaModal.addEventListener('click', function(e) {
+                if (e.target === fifaModal) {
+                    fifaModal.style.display = 'none';
                     document.body.style.overflow = 'auto';
                 }
             });
@@ -1679,7 +2301,7 @@
 
         // WhatsApp functions
         function openWhatsApp(propertyName) {
-            const message = encodeURIComponent(`¡Hola! Estoy interesado en en rentar en su propiedad "${propertyName}". ¿Podrían darme más información sobre disponibilidad por favor?`);
+            const message = encodeURIComponent(`¡Hola! Estoy interesado en la propiedad "${propertyName}". ¿Podrían darme más información sobre disponibilidad?`);
             window.open(`https://wa.me/5215511406820?text=${message}`, '_blank');
         }
 
@@ -1746,6 +2368,7 @@
             const checkOut = document.getElementById('checkout-date').value;
             const adults = parseInt(document.getElementById('adults').value);
             const children = parseInt(document.getElementById('children').value);
+            const searchBtn = document.getElementById('search-btn');
             
             // Validaciones
             if (!location) {
@@ -1788,11 +2411,24 @@
             
             message += `\n\n¿Podrían ayudarme con la disponibilidad?`;
             
-            // Simular búsqueda
-            alert(`Buscando disponibilidad en ${location} para:\n${checkIn} al ${checkOut}\n${adults} adultos, ${children} niños\n\nRedirigiendo a WhatsApp...`);
+            // Agregar animación de búsqueda
+            searchBtn.classList.add('searching');
+            searchBtn.disabled = true;
+            searchBtn.innerHTML = 'Buscando...';
             
-            // Abrir WhatsApp con el mensaje formateado
-            window.open(`https://wa.me/5215511406820?text=${encodeURIComponent(message)}`, '_blank');
+            // Simular búsqueda con animación
+            setTimeout(() => {
+                // Restaurar botón
+                searchBtn.classList.remove('searching');
+                searchBtn.disabled = false;
+                searchBtn.innerHTML = 'Buscar Disponibilidad';
+                
+                // Mostrar mensaje y abrir WhatsApp
+                alert(`Buscando disponibilidad en ${location} para:\n${checkIn} al ${checkOut}\n${adults} adultos, ${children} niños\n\nRedirigiendo a WhatsApp...`);
+                
+                // Abrir WhatsApp con el mensaje formateado
+                window.open(`https://wa.me/5215511406820?text=${encodeURIComponent(message)}`, '_blank');
+            }, 4000); // 4 segundos de animación
         }
     </script>
 </body>
