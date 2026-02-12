@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>U3 Seguridad Privada · Élite Corporativa</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google API (Gemini) -->
+    <script src="https://www.gstatic.com/generative-ai/generative-ai.umd.js"></script>
+    <!-- GSAP para animaciones profesionales -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        /* ---------- RESET & VARIABLES ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --black: #0A0C0F;
+            --graphite: #1E1F24;
+            --titan: #2C2E33;
+            --platinum: #E5E7EB;
+            --blue-accent: #0A4B7A;
+            --blue-light: #1C7ED6;
+            --white: #FFFFFF;
+            --gradient-dark: linear-gradient(145deg, #0A0C0F 0%, #1A1D23 100%);
+            --shadow-xl: 0 25px 50px -12px rgba(0,0,0,0.8);
+            --shadow-elegant: 0 20px 35px -8px rgba(0,0,0,0.6);
+            --font-display: 'Inter', sans-serif;
+        }
+        body {
+            font-family: var(--font-display);
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* ---------- ANIMACIONES DE ENTRADA (scroll reveal) ---------- */
+        .reveal-left, .reveal-right, .reveal-up, .reveal-scale {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.1s ease;
+        }
+        /* ---------- HEADER STICKY MODERNO ---------- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 12, 15, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            background: var(--blue-accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            box-shadow: 0 0 20px rgba(10,75,122,0.4);
+        }
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            font-weight: 300;
+            color: var(--platinum);
+        }
+        nav {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+        nav a {
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--blue-light);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .btn-cotizar {
+            background: var(--blue-accent);
+            padding: 0.7rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            box-shadow: 0 4px 14px rgba(10,75,122,0.4);
+        }
+        .btn-cotizar:hover {
+            background: #0E5D99;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(10,75,122,0.6);
+        }
+        /* ---------- HERO SECTION ---------- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 2rem 5%;
+            overflow: hidden;
+        }
+        .hero-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: -1;
+            filter: grayscale(0.8) contrast(1.2);
+        }
+        .hero-content {
+            max-width: 700px;
+            z-index: 2;
+        }
+        .tag {
+            display: inline-block;
+            background: rgba(28, 126, 214, 0.18);
+            border: 1px solid rgba(28,126,214,0.3);
+            backdrop-filter: blur(5px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1.8rem;
+            color: #B3E0FF;
+        }
+        .hero h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 span {
+            background: linear-gradient(to right, #FFFFFF, #AAD3FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--platinum);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            font-weight: 300;
+        }
+        .hero-badges {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.8rem;
+        }
+        .badge {
+            background: rgba(255,255,255,0.05);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            border-left: 3px solid var(--blue-light);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .btn-primary {
+            background: var(--blue-accent);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 10px 25px -5px #0A4B7A;
+        }
+        .btn-primary:hover {
+            background: #0E5D99;
+            transform: scale(1.05);
+        }
+        .btn-outline {
+            background: transparent;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 1.5px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+            transition: 0.2s;
+        }
+        .btn-outline:hover {
+            border-color: var(--blue-light);
+            background: rgba(28,126,214,0.1);
+        }
+        /* ---------- TRUST BAR ---------- */
+        .trust-bar {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            padding: 1.8rem 5%;
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            flex-wrap: wrap;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            color: #CCC;
+        }
+        .trust-item i {
+            color: var(--blue-light);
+            font-size: 1.3rem;
+        }
+        /* ---------- SERVICIOS ---------- */
+        .section {
+            padding: 6rem 5%;
+        }
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1.5px;
+        }
+        .section-sub {
+            color: #A0A0A0;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 4rem;
+            font-weight: 300;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background: var(--graphite);
+            padding: 2.5rem 1.8rem;
+            border-radius: 24px;
+            border: 1px solid #333;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0%;
+            background: var(--blue-light);
+            transition: 0.4s;
+        }
+        .service-card:hover {
+            background: #25282E;
+            transform: translateY(-12px);
+            border-color: var(--blue-light);
+            box-shadow: var(--shadow-elegant);
+        }
+        .service-card:hover::before {
+            height: 100%;
+        }
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--blue-light);
+            margin-bottom: 1.5rem;
+        }
+        .service-card h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .service-card p {
+            color: #B0B0B0;
+            line-height: 1.6;
+        }
+        /* ---------- CHATBOT ÉLITE: CARLOS (UNIFORME) ---------- */
+        .chatbot-section {
+            background: radial-gradient(circle at 80% 30%, #0F1A24, #0A0C0F);
+            border-radius: 48px 48px 0 0;
+            padding: 5rem 5%;
+            margin-top: 2rem;
+            border-top: 1px solid #2C2E33;
+            position: relative;
+        }
+        .chatbot-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .chatbot-info h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
+        }
+        .chatbot-info .highlight {
+            color: var(--blue-light);
+            border-bottom: 2px solid var(--blue-light);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .chat-avatar-card {
+            background: rgba(30, 32, 38, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 32px;
+            padding: 2rem;
+            box-shadow: var(--shadow-xl);
+        }
+        .avatar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .agent-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid var(--blue-light);
+            object-fit: cover;
+            box-shadow: 0 0 40px rgba(28,126,214,0.3);
+            margin-bottom: 1rem;
+            background: #1E1F24; /* fallback */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>');
+            background-size: 60%;
+            background-position: center 55%;
+            background-repeat: no-repeat;
+        }
+        .agent-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        .agent-rank {
+            color: var(--blue-light);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .chat-window {
+            background: #0C0E12;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-top: 1.8rem;
+            border: 1px solid #333;
+            height: 260px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-right: 5px;
+        }
+        .message {
+            padding: 0.7rem 1.2rem;
+            border-radius: 18px;
+            max-width: 85%;
+            word-break: break-word;
+            animation: fadeIn 0.3s;
+        }
+        .message.agent {
+            background: #1E2A36;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            color: white;
+        }
+        .message.user {
+            background: var(--blue-accent);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-input-area {
+            display: flex;
+            margin-top: 1rem;
+            gap: 0.8rem;
+        }
+        .chat-input-area input {
+            flex: 1;
+            background: #1A1D23;
+            border: 1px solid #3A3F4A;
+            border-radius: 40px;
+            padding: 0.9rem 1.3rem;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        .chat-input-area input:focus {
+            border-color: var(--blue-light);
+            box-shadow: 0 0 0 2px rgba(28,126,214,0.2);
+        }
+        .chat-input-area button {
+            background: var(--blue-light);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .chat-input-area button:hover {
+            background: #0E5D99;
+            transform: scale(1.1);
+        }
+        .typing-indicator {
+            color: #AAA;
+            font-style: italic;
+            padding-left: 0.5rem;
+        }
+        /* ---------- VALORES ---------- */
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.8rem;
+            margin-top: 3rem;
+        }
+        .valor-item {
+            background: rgba(255,255,255,0.02);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #26292E;
+            transition: 0.3s;
+        }
+        .valor-item:hover {
+            background: #1E1F24;
+            border-color: var(--blue-light);
+            transform: scale(1.02);
+        }
+        .valor-item i {
+            font-size: 2.2rem;
+            color: var(--blue-light);
+            margin-bottom: 1rem;
+        }
+        .valor-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .valor-item p {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        /* ---------- FOOTER ---------- */
+        footer {
+            background: #060708;
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid #202020;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        .footer-contact i {
+            color: var(--blue-light);
+            margin-right: 0.8rem;
+        }
+        .footer-contact p {
+            margin-bottom: 0.7rem;
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #222;
+            color: #777;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 1000px) {
+            .chatbot-container { grid-template-columns: 1fr; }
+            .valores-grid { grid-template-columns: repeat(2,1fr); }
+            .hero h1 { font-size: 3rem; }
+        }
+        @media (max-width: 700px) {
+            nav { display: none; }
+            .valores-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER MODERNO -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">U3</div>
+            <div class="logo-text">U3 <span>Seguridad</span></div>
+        </div>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Servicios</a>
+            <a href="#">Nosotros</a>
+            <a href="#">Contacto</a>
+        </nav>
+        <a href="#" class="btn-cotizar"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>Cotizar 24/7</a>
+    </header>
+
+    <!-- HERO CON ANIMACIONES -->
+    <section class="hero">
+        <!-- Video background simulado con overlay (por tiempo, imagen fija) -->
+        <div class="hero-bg-video" style="background: url('https://images.unsplash.com/photo-1557597774-9d273605dfa2?q=80&w=2070&auto=format&fit=crop') center/cover;"></div>
+        <div class="hero-content reveal-left">
+            <span class="tag"><i class="fas fa-check-circle" style="margin-right: 6px;"></i> PERMISO SSC_CDMX: 0105-23</span>
+            <h1><span>SIEMPRE</span><br>PROTEGIENDO.</h1>
+            <p>Más de 25 años de experiencia combinan la solidez y la innovación. Modelos confiables, equipo de élite.</p>
+            <div class="hero-badges">
+                <div class="badge"><i class="fas fa-star" style="color: #FFD700;"></i> 25+ AÑOS</div>
+                <div class="badge"><i class="fas fa-building"></i> INTRAMUROS</div>
+                <div class="badge"><i class="fas fa-shield-hawk"></i> CUSTODIAS</div>
+            </div>
+            <div class="btn-group">
+                <a href="#" class="btn-primary"><i class="fas fa-headset" style="margin-right: 10px;"></i>SOLICITA ASESORÍA</a>
+                <a href="#" class="btn-outline"><i class="fas fa-play"></i> CONOCE SERVICIOS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <div class="trust-bar reveal-up">
+        <div class="trust-item"><i class="fas fa-certificate"></i> Permiso Oficial 0105-23</div>
+        <div class="trust-item"><i class="fas fa-user-tie"></i> Socios: 25+ años de experiencia</div>
+        <div class="trust-item"><i class="fas fa-clock"></i> Monitoreo 24/7/365</div>
+        <div class="trust-item"><i class="fas fa-medal"></i> Confianza certificada</div>
+    </div>
+
+    <!-- SERVICIOS (cards que aparecen desde derecha/izquierda) -->
+    <section class="section">
+        <h2 class="section-title reveal-left">EXPERTOS EN <span style="color: #1C7ED6;">SEGURIDAD PRIVADA</span></h2>
+        <p class="section-sub reveal-left">Diseñamos estrategias a la medida. Cada servicio ejecutado por personal con filtros de alto nivel.</p>
+        <div class="services-grid">
+            <div class="service-card reveal-left">
+                <div class="service-icon"><i class="fas fa-building"></i></div>
+                <h3>INTRAMUROS</h3>
+                <p>Protección perimetral y activos. Personal con perfil idóneo, control de confianza y capacitación constante.</p>
+            </div>
+            <div class="service-card reveal-right">
+                <div class="service-icon"><i class="fas fa-truck"></i></div>
+                <h3>CUSTODIAS</h3>
+                <p>Traslado de valores y mercancía sensible. Blindaje, coordinación y monitoreo satelital en tiempo real.</p>
+            </div>
+            <div class="service-card reveal-left">
+                <div class="service-icon"><i class="fas fa-microchip"></i></div>
+                <h3>ELECTRÓNICA</h3>
+                <p>Circuito cerrado, control de accesos y sensores. Integración tecnológica para una vigilancia inteligente.</p>
+            </div>
+            <div class="service-card reveal-right">
+                <div class="service-icon"><i class="fas fa-user-shield"></i></div>
+                <h3>EJECUTIVA</h3>
+                <p>Escoltas de alto perfil, análisis de rutas y seguridad personal para directivos y familias.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CHATBOT ÉLITE: CARLOS CON UNIFORME U3 ===== -->
+    <section class="chatbot-section">
+        <div class="chatbot-container">
+            <div class="chatbot-info reveal-left">
+                <h2>HABLA CON <span class="highlight">CARLOS</span></h2>
+                <p style="font-size: 1.3rem; font-weight: 300; margin-bottom: 2rem; color: #CCC;">Supervisor en línea · Uniformado U3</p>
+                <p style="margin-bottom: 2rem; line-height: 1.7;">Nuestro asesor virtual con apariencia real de elemento de seguridad. Respuestas basadas en información oficial de la empresa, 25 años de operación y servicios activos. Pregúntale sin esperas.</p>
+                <div style="display: flex; gap: 1.5rem;">
+                    <span style="background: #1C7ED6; padding: 0.4rem 1.2rem; border-radius: 30px; font-weight: 500;"><i class="fas fa-bolt"></i> Tiempo real</span>
+                    <span style="background: transparent; border:1px solid #444; padding: 0.4rem 1.2rem; border-radius: 30px;"><i class="fas fa-check"></i> IA entrenada</span>
+                </div>
+            </div>
+            <div class="chat-avatar-card reveal-right">
+                <div class="avatar-wrapper">
+                    <!-- Avatar del guardia con uniforme (imagen vectorial de alta calidad) -->
+                    <div class="agent-image" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png'); background-size: 80%; background-color: #0F1A24; background-blend-mode: overlay;"></div>
+                    <div class="agent-name">Carlos Mendoza</div>
+                    <div class="agent-rank">Supervisor Operativo · Uniformado U3</div>
+                    <div style="display: flex; gap: 5px; margin-bottom: 0.5rem;">
+                        <span style="background: #0E5D99; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem;">EN LÍNEA</span>
+                        <span style="background: #2C2E33; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem;"><i class="fas fa-shield"></i> ID: U3-105</span>
+                    </div>
+                </div>
+                <!-- VENTANA DE CHAT REAL CON GEMINI API -->
+                <div class="chat-window">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message agent">
+                            <i class="fas fa-user-shield" style="margin-right: 6px;"></i> Carlos: Soy Carlos, supervisor de U3. ¿En qué puedo apoyarle? Consulta cotizaciones, servicios o el permiso 0105-23.
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Escriba su mensaje...">
+                        <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALORES U3 -->
+    <section class="section" style="padding-top: 2rem;">
+        <h2 class="section-title reveal-left">NUESTROS VALORES</h2>
+        <div class="valores-grid">
+            <div class="valor-item reveal-scale">
+                <i class="fas fa-hand-peace"></i>
+                <h4>Respeto</h4>
+                <p>Diversidad y libre pensamiento.</p>
+            </div>
+            <div class="valor-item reveal-scale">
+                <i class="fas fa-fire"></i>
+                <h4>Pasión</h4>
+                <p>Talento al servicio del cliente.</p>
+            </div>
+            <div class="valor-item reveal-scale">
+                <i class="fas fa-hand-holding-heart"></i>
+                <h4>Responsabilidad</h4>
+                <p>Mejoramos comunidades.</p>
+            </div>
+            <div class="valor-item reveal-scale">
+                <i class="fas fa-gem"></i>
+                <h4>Integridad</h4>
+                <p>Honestidad y competencia justa.</p>
+            </div>
+            <div class="valor-item reveal-scale">
+                <i class="fas fa-clock"></i>
+                <h4>Disciplina</h4>
+                <p>Constancia y trabajo arduo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO Y MAPA -->
+    <section class="section" style="background: #0C0E12;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div class="reveal-left">
+                <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">SEGURIDAD <span style="color: #1C7ED6;">A TU SERVICIO</span></h2>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <p style="display: flex; gap: 1rem;"><i class="fas fa-map-pin" style="color: #1C7ED6; font-size: 1.5rem;"></i> Oficinas: Av Insurgentes Sur 1915, Guadalupe Inn, CDMX.</p>
+                    <p style="display: flex; gap: 1rem;"><i class="fas fa-envelope" style="color: #1C7ED6; font-size: 1.5rem;"></i> contacto@u3seguridadprivada.com</p>
+                    <p style="display: flex; gap: 1rem;"><i class="fas fa-phone-alt" style="color: #1C7ED6; font-size: 1.5rem;"></i> 55 8295 1244 · 10 líneas</p>
+                </div>
+                <a href="#" class="btn-primary" style="margin-top: 2.5rem; display: inline-block;"><i class="fas fa-calendar-check"></i> Agenda análisis sin costo</a>
+            </div>
+            <div style="background: #1A1D23; padding: 1.5rem; border-radius: 24px; border: 1px solid #333;" class="reveal-right">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.797306834472!2d-99.19741998538428!3d19.38012794653332!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0020db4d1d2f%3A0x1e7e5f6e8c7f6f0!2sAv%20Insurgentes%20Sur%201915%2C%20Guadalupe%20Inn%2C%20%C3%81lvaro%20Obreg%C3%B3n%2C%2001020%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1647890123456!5m2!1ses!2smx" width="100%" height="280" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">U3 SEGURIDAD</div>
+                <p style="margin-top: 1.5rem; color: #AAA; line-height: 1.6;">Innovación y confianza. Respaldo de 25 años en el sector.</p>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1.5rem;">Servicios</h4>
+                <p style="color: #BBB; margin-bottom: 0.5rem;">Intramuros</p>
+                <p style="color: #BBB; margin-bottom: 0.5rem;">Custodias</p>
+                <p style="color: #BBB; margin-bottom: 0.5rem;">Electrónica</p>
+                <p style="color: #BBB;">Ejecutiva</p>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1.5rem;">Legal</h4>
+                <p style="color: #BBB;">Permiso SSC_CDMX: 0105-23</p>
+                <p style="color: #BBB;">Aviso de privacidad</p>
+                <p style="color: #BBB;">Términos y condiciones</p>
+            </div>
+            <div class="footer-contact">
+                <h4 style="margin-bottom: 1.5rem;">Contacto</h4>
+                <p><i class="fas fa-phone"></i> 55 8295 1244</p>
+                <p><i class="fas fa-envelope"></i> contacto@u3seguridadprivada.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> CDMX, México</p>
+            </div>
+        </div>
+        <div class="copyright">
+            U3 Seguridad Privada, S.A. de C.V. · 2026 Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // -------------------------------------------------------------
+        // 1. CONFIGURACIÓN API GEMINI (CLAVE PROPORCIONADA POR EL USUARIO)
+        //    MODELO: gemini-1.5-flash (RÁPIDO)
+        // -------------------------------------------------------------
+        const API_KEY = 'AIzaSyCbgTewjnV83oDBEeD1Sfh-BfWFiosFr-U';
+        let model;
+
+        (async function initGemini() {
+            try {
+                const { GoogleGenerativeAI } = await import('https://www.gstatic.com/generative-ai/generative-ai.umd.js');
+                const genAI = new GoogleGenerativeAI(API_KEY);
+                model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                console.log("✅ Gemini listo");
+            } catch (error) {
+                console.error("Error al cargar Gemini", error);
+            }
+        })();
+
+        // Elementos del chat
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendChatBtn');
+
+        // Contexto de U3 para respuestas reales (RAG manual)
+        const contextoU3 = `
+        U3 Seguridad Privada, permiso SSC_CDMX: 0105-23. Socios fundadores con más de 25 años de experiencia.
+        Servicios: Intramuros (seguridad en bienes e instalaciones, personal con filtros de confianza), 
+        Custodias, Electrónica (CCTV, alarmas), Ejecutiva (escoltas). 
+        Oficinas: Av Insurgentes Sur 1915, Guadalupe Inn, CDMX. 
+        Tel: 55 8295 1244, 10 líneas. Email: contacto@u3seguridadprivada.com.
+        Valores: Respeto, Pasión, Responsabilidad social, Integridad, Disciplina.
+        El asesor virtual es Carlos, supervisor operativo con uniforme U3.
+        Responde siempre como Carlos, en primera persona, amable pero formal, ofreciendo datos concretos de U3.
+        Si no sabes algo, sugiere contacto directo.
+        `;
+
+        // Función para enviar mensaje a Gemini con contexto
+        async function enviarMensaje(mensajeUsuario) {
+            if (!model) {
+                return "Carlos: Estoy conectando el sistema, por favor intenta de nuevo en unos segundos.";
+            }
+            try {
+                const prompt = `${contextoU3}\n\nUsuario: ${mensajeUsuario}\nCarlos (Supervisor U3):`;
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                let text = response.text();
+                // Limpiar y formatear
+                text = text.replace(/^Carlos:?/i, '').trim();
+                return `Carlos: ${text}`;
+            } catch (error) {
+                console.error(error);
+                return "Carlos: Disculpa, tenemos alta demanda. ¿Prefieres que te contacte vía telefónica? Llama al 55 8295 1244.";
+            }
+        }
+
+        // Agregar mensaje al chat visual
+        function addMessage(sender, text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', sender);
+            if (sender === 'agent') {
+                msgDiv.innerHTML = `<i class="fas fa-user-shield" style="margin-right: 6px;"></i> ${text}`;
+            } else {
+                msgDiv.textContent = text;
+            }
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Manejar envío
+        async function handleSend() {
+            const userText = chatInput.value.trim();
+            if (userText === '') return;
+            addMessage('user', userText);
+            chatInput.value = '';
+
+            // Indicador de escritura (Carlos)
+            const typingDiv = document.createElement('div');
+            typingDiv.classList.add('message', 'agent', 'typing-indicator');
+            typingDiv.innerHTML = `<i class="fas fa-ellipsis-h"></i> Carlos está escribiendo...`;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const respuesta = await enviarMensaje(userText);
+            chatMessages.removeChild(typingDiv);
+            addMessage('agent', respuesta);
+        }
+
+        sendBtn.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+
+        // -------------------------------------------------------------
+        // 2. ANIMACIONES PROFESIONALES CON GSAP (Scroll Reveal)
+        // -------------------------------------------------------------
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Revelar elementos desde izquierda/derecha/arriba/abajo con efectos
+        function animateReveal() {
+            // left reveal
+            gsap.utils.toArray('.reveal-left').forEach(el => {
+                gsap.fromTo(el, 
+                    { x: -100, opacity: 0, visibility: 'visible' },
+                    {
+                        x: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+                        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+                    }
+                );
+            });
+            // right reveal
+            gsap.utils.toArray('.reveal-right').forEach(el => {
+                gsap.fromTo(el, 
+                    { x: 100, opacity: 0, visibility: 'visible' },
+                    {
+                        x: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+                        scrollTrigger: { trigger: el, start: 'top 85%' }
+                    }
+                );
+            });
+            // up reveal
+            gsap.utils.toArray('.reveal-up').forEach(el => {
+                gsap.fromTo(el, 
+                    { y: 80, opacity: 0, visibility: 'visible' },
+                    {
+                        y: 0, opacity: 1, duration: 1, ease: 'back.out(1.2)',
+                        scrollTrigger: { trigger: el, start: 'top 90%' }
+                    }
+                );
+            });
+            // scale reveal
+            gsap.utils.toArray('.reveal-scale').forEach(el => {
+                gsap.fromTo(el, 
+                    { scale: 0.7, opacity: 0, visibility: 'visible' },
+                    {
+                        scale: 1, opacity: 1, duration: 0.8, ease: 'elastic.out(1, 0.4)',
+                        scrollTrigger: { trigger: el, start: 'top 85%' }
+                    }
+                );
+            });
+        }
+
+        window.addEventListener('load', () => {
+            // Asegurar visibilidad de los elementos para animación
+            document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up, .reveal-scale').forEach(el => {
+                el.style.visibility = 'visible';
+            });
+            animateReveal();
+
+            // animación adicional al hero
+            gsap.from('.hero-content', { duration: 1.5, y: 50, opacity: 0, ease: 'power3.out' });
+            gsap.from('.trust-bar', { duration: 1, y: 40, opacity: 0, delay: 0.5, ease: 'power2.out' });
+        });
+    </script>
+    <!-- Cargar Gemini API de forma dinámica (respaldo) -->
+    <script async defer src="https://www.gstatic.com/generative-ai/generative-ai.umd.js"></script>
+</body>
+</html>
