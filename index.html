@@ -692,7 +692,7 @@
             font-style: italic;
             padding-left: 0.5rem;
         }
-        /* ---------- MODAL COTIZAR ---------- */
+        /* ---------- MODAL COTIZAR - ESTILOS MEJORADOS ---------- */
         .modal-cotizar {
             display: none;
             position: fixed;
@@ -710,7 +710,7 @@
             background: var(--graphite);
             border: 1px solid #3A3F4A;
             border-radius: 32px;
-            max-width: 500px;
+            max-width: 550px;
             width: 90%;
             padding: 2.8rem 2.5rem;
             box-shadow: var(--shadow-xl);
@@ -739,7 +739,8 @@
             color: #AAA;
             margin-bottom: 0.4rem;
         }
-        .campo input {
+        .campo input,
+        .campo select {
             width: 100%;
             background: #1A1D23;
             border: 1px solid #3F4450;
@@ -750,7 +751,20 @@
             outline: none;
             transition: 0.2s;
         }
-        .campo input:focus {
+        .campo select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23AAA' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1.5rem center;
+            background-size: 16px;
+            cursor: pointer;
+        }
+        .campo option {
+            background: var(--graphite);
+            color: white;
+        }
+        .campo input:focus,
+        .campo select:focus {
             border-color: var(--blue-light);
             box-shadow: 0 0 0 3px rgba(28,126,214,0.2);
         }
@@ -926,7 +940,7 @@
         <a class="btn-cotizar" id="btnCotizarHeader"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>Cotizar 24/7</a>
     </header>
 
-    <!-- MODAL COTIZAR -->
+    <!-- MODAL COTIZAR - VERSIÓN MEJORADA CON UBICACIÓN -->
     <div id="modalCotizar" class="modal-cotizar">
         <div class="modal-card">
             <span id="cerrarModalBtn" class="btn-cerrar-modal">&times;</span>
@@ -935,15 +949,53 @@
             <div id="formCotizar">
                 <div class="campo">
                     <label><i class="fas fa-user"></i> NOMBRE</label>
-                    <input type="text" id="nombreCot" placeholder="Ej. Carlos" autocomplete="off">
+                    <input type="text" id="nombreCot" placeholder="Ej. Arturo Enrique" autocomplete="off">
                 </div>
                 <div class="campo">
                     <label><i class="fas fa-user-tag"></i> APELLIDO</label>
-                    <input type="text" id="apellidoCot" placeholder="Ej. Mendoza">
+                    <input type="text" id="apellidoCot" placeholder="Ej. Tramontin Colmenares">
                 </div>
                 <div class="campo">
                     <label><i class="fas fa-phone-alt"></i> TELÉFONO</label>
-                    <input type="tel" id="telCot" placeholder="55 1234 5678">
+                    <input type="tel" id="telCot" placeholder="2225165117">
+                </div>
+                <div class="campo">
+                    <label><i class="fas fa-map-marker-alt"></i> UBICACIÓN (ESTADO)</label>
+                    <select id="estadoCot">
+                        <option value="" disabled selected>Selecciona tu estado</option>
+                        <option value="Aguascalientes">Aguascalientes</option>
+                        <option value="Baja California">Baja California</option>
+                        <option value="Baja California Sur">Baja California Sur</option>
+                        <option value="Campeche">Campeche</option>
+                        <option value="Chiapas">Chiapas</option>
+                        <option value="Chihuahua">Chihuahua</option>
+                        <option value="Ciudad de México">Ciudad de México</option>
+                        <option value="Coahuila">Coahuila</option>
+                        <option value="Colima">Colima</option>
+                        <option value="Durango">Durango</option>
+                        <option value="Estado de México">Estado de México</option>
+                        <option value="Guanajuato">Guanajuato</option>
+                        <option value="Guerrero">Guerrero</option>
+                        <option value="Hidalgo">Hidalgo</option>
+                        <option value="Jalisco">Jalisco</option>
+                        <option value="Michoacán">Michoacán</option>
+                        <option value="Morelos">Morelos</option>
+                        <option value="Nayarit">Nayarit</option>
+                        <option value="Nuevo León">Nuevo León</option>
+                        <option value="Oaxaca">Oaxaca</option>
+                        <option value="Puebla">Puebla</option>
+                        <option value="Querétaro">Querétaro</option>
+                        <option value="Quintana Roo">Quintana Roo</option>
+                        <option value="San Luis Potosí">San Luis Potosí</option>
+                        <option value="Sinaloa">Sinaloa</option>
+                        <option value="Sonora">Sonora</option>
+                        <option value="Tabasco">Tabasco</option>
+                        <option value="Tamaulipas">Tamaulipas</option>
+                        <option value="Tlaxcala">Tlaxcala</option>
+                        <option value="Veracruz">Veracruz</option>
+                        <option value="Yucatán">Yucatán</option>
+                        <option value="Zacatecas">Zacatecas</option>
+                    </select>
                 </div>
                 <button id="enviarCotizacionBtn" class="btn-enviar-cotizar">
                     <i class="fas fa-paper-plane"></i> ENVIAR COTIZACIÓN
@@ -1296,7 +1348,7 @@
         });
 
         // -------------------------------------------------------------
-        // 2. MODAL COTIZAR - TELÉFONO ACTUALIZADO
+        // 2. MODAL COTIZAR - VERSIÓN MEJORADA CON NOMBRE, APELLIDO Y ESTADO
         // -------------------------------------------------------------
         const modal = document.getElementById('modalCotizar');
         const btnCotizar = document.getElementById('btnCotizarHeader');
@@ -1314,6 +1366,7 @@
             document.getElementById('nombreCot').value = '';
             document.getElementById('apellidoCot').value = '';
             document.getElementById('telCot').value = '';
+            document.getElementById('estadoCot').value = '';
         }
 
         btnCotizar.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
@@ -1325,23 +1378,50 @@
 
         enviarBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            
+            // Obtener valores del formulario
             const nombre = document.getElementById('nombreCot').value.trim();
             const apellido = document.getElementById('apellidoCot').value.trim();
             const telefono = document.getElementById('telCot').value.trim();
+            const estado = document.getElementById('estadoCot').value;
 
-            if (!nombre || !apellido || !telefono) {
-                alert('Por favor complete todos los campos: Nombre, Apellido y Teléfono.');
+            // Validar campos
+            if (!nombre) {
+                alert('Por favor ingrese su nombre.');
+                return;
+            }
+            if (!apellido) {
+                alert('Por favor ingrese su apellido.');
+                return;
+            }
+            if (!telefono) {
+                alert('Por favor ingrese su teléfono.');
+                return;
+            }
+            if (!estado) {
+                alert('Por favor seleccione su estado.');
                 return;
             }
 
             formCotizar.style.display = 'none';
             loadingDiv.style.display = 'block';
 
-            const mensaje = encodeURIComponent(`Hola, solicito cotización U3.%0A%0A*Nombre:* ${nombre} ${apellido}%0A*Teléfono:* ${telefono}%0A%0A¡Gracias!`);
+            // Crear mensaje formateado correctamente - SIN %0A%0A visible, con saltos de línea reales
+            const mensaje = `Hola, solicito cotización U3.
+
+Nombre: ${nombre}
+Apellido: ${apellido}
+Teléfono: ${telefono}
+Ubicación: ${estado}
+
+¡Gracias!`;
+
+            // Codificar el mensaje para URL
+            const mensajeCodificado = encodeURIComponent(mensaje);
             const telefonoContacto = '5212218951350';
 
             setTimeout(() => {
-                window.open(`https://wa.me/${telefonoContacto}?text=${mensaje}`, '_blank');
+                window.open(`https://wa.me/${telefonoContacto}?text=${mensajeCodificado}`, '_blank');
                 setTimeout(() => {
                     modal.style.display = 'none';
                     formCotizar.style.display = 'block';
