@@ -2,23 +2,23 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, viewport-fit=cover">
     <title>U3 Seguridad Privada · Élite Corporativa</title>
-    <!-- Google Fonts & Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter + Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google API (Gemini) -->
-    <script src="https://www.gstatic.com/generative-ai/generative-ai.umd.js"></script>
-    <!-- GSAP para animaciones profesionales -->
+    <!-- GSAP + ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <style>
-        /* ---------- RESET & VARIABLES ---------- */
+        /* ---------- VARIABLES DE DISEÑO PRO ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         :root {
             --black: #0A0C0F;
             --graphite: #1E1F24;
@@ -28,84 +28,97 @@
             --blue-light: #1C7ED6;
             --blue-deep: #0A3A5A;
             --white: #FFFFFF;
-            --gradient-dark: linear-gradient(145deg, #0A0C0F 0%, #1A1D23 100%);
+            --glass-bg: rgba(30, 32, 38, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --gradient-blue: linear-gradient(135deg, #0A4B7A, #1C7ED6);
-            --shadow-xl: 0 25px 50px -12px rgba(0,0,0,0.8);
-            --shadow-elegant: 0 20px 35px -8px rgba(0,0,0,0.6);
+            --shadow-glass: 0 8px 32px 0 rgba(0,0,0,0.36);
             --font-display: 'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
         }
+
         body {
             font-family: var(--font-display);
             background-color: var(--black);
             color: var(--white);
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            line-height: 1.6;
         }
+
         a {
             text-decoration: none;
             color: inherit;
         }
-        /* ---------- ANIMACIONES DE ENTRADA (scroll reveal) ---------- */
-        .reveal-left, .reveal-right, .reveal-up, .reveal-scale {
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.1s ease;
-        }
-        /* ---------- HEADER STICKY MODERNO ---------- */
+
+        /* ---------- HEADER STICKY ---------- */
         header {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(10, 12, 15, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding: 1.2rem 5%;
+            background: rgba(10, 12, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(28, 126, 214, 0.2);
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background: transparent;
-            box-shadow: 0 0 20px rgba(10,75,122,0.4);
+            background: linear-gradient(145deg, #0A4B7A, #0E5D99);
+            box-shadow: 0 0 25px rgba(28,126,214,0.5);
         }
+
         .logo-icon img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
+
         .logo-text {
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -0.5px;
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #FFFFFF, #B0D4FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .logo span {
+        .logo-text span {
             font-weight: 300;
-            color: var(--platinum);
+            -webkit-text-fill-color: var(--platinum);
+            font-family: var(--font-display);
         }
+
         nav {
             display: flex;
             gap: 3rem;
             align-items: center;
         }
+
         nav a {
             font-weight: 500;
             font-size: 1rem;
             position: relative;
-            padding-bottom: 5px;
+            padding-bottom: 6px;
+            color: #E0E0E0;
+            transition: color 0.3s;
         }
+        nav a:hover {
+            color: white;
+        }
+
         nav a::after {
             content: '';
             position: absolute;
@@ -113,586 +126,285 @@
             left: 0;
             width: 0%;
             height: 2px;
-            background: var(--blue-light);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--gradient-blue);
+            transition: 0.4s;
+            box-shadow: 0 0 8px var(--blue-light);
         }
         nav a:hover::after {
             width: 100%;
         }
+
         .btn-cotizar {
-            background: var(--blue-accent);
-            padding: 0.7rem 1.8rem;
-            border-radius: 40px;
-            font-weight: 600;
+            background: var(--gradient-blue);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
             font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s;
-            box-shadow: 0 4px 14px rgba(10,75,122,0.4);
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(10,75,122,0.5);
             cursor: pointer;
-        }
-        .btn-cotizar:hover {
-            background: #0E5D99;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(10,75,122,0.6);
-        }
-        /* ---------- HERO SECTION ---------- */
-        .hero {
-            min-height: 90vh;
+            color: white;
             display: flex;
             align-items: center;
-            position: relative;
-            padding: 2rem 5%;
-            overflow: hidden;
+            gap: 8px;
         }
-        .hero-bg-video {
+        .btn-cotizar:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(28,126,214,0.7);
+            background: linear-gradient(135deg, #0E5D99, #1C7ED6);
+        }
+
+        /* ---------- HERO ÚNICO - GUARDA GRANDE + SIEMPRE PROTEGIENDO ---------- */
+        .hero-unico {
+            width: 100%;
+            min-height: 90vh;
+            background: linear-gradient(145deg, #0A0C0F 0%, #0F1A24 100%);
+            display: flex;
+            align-items: center;
+            padding: 2rem 5%;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(28,126,214,0.3);
+        }
+
+        .hero-unico::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            opacity: 0.3;
-            z-index: -1;
-            filter: grayscale(0.8) contrast(1.2);
+            background: url('https://images.unsplash.com/photo-1557597774-9d273605dfa2?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            opacity: 0.15;
+            filter: grayscale(0.9) contrast(1.3);
+            z-index: 0;
         }
-        .hero-content {
-            max-width: 700px;
+
+        .hero-unico-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            flex-wrap: wrap;
+            position: relative;
             z-index: 2;
         }
-        .tag {
+
+        /* TEXTO HERO - IZQUIERDA */
+        .hero-unico-content {
+            flex: 1 1 450px;
+        }
+
+        .hero-tag {
             display: inline-block;
-            background: rgba(28, 126, 214, 0.18);
-            border: 1px solid rgba(28,126,214,0.3);
-            backdrop-filter: blur(5px);
-            padding: 0.5rem 1.2rem;
+            background: rgba(28,126,214,0.15);
+            border: 1px solid var(--blue-light);
+            padding: 0.5rem 1.6rem;
             border-radius: 100px;
             font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 1.8rem;
-            color: #B3E0FF;
-        }
-        .hero h1 {
-            font-size: 4.2rem;
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -2px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
             margin-bottom: 1.5rem;
+            color: #B0E0FF;
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
         }
-        .hero h1 span {
-            background: linear-gradient(to right, #FFFFFF, #AAD3FF);
+
+        .hero-title {
+            font-size: 5.2rem;
+            font-weight: 800;
+            font-family: var(--font-serif);
+            line-height: 1;
+            letter-spacing: -4px;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(to right, #FFFFFF, #B0E0FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 30px rgba(0,0,0,0.7);
         }
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--platinum);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
+
+        .hero-sub {
+            font-size: 1.3rem;
+            color: #DDD;
+            max-width: 550px;
+            margin-bottom: 2.2rem;
             font-weight: 300;
+            border-left: 5px solid var(--blue-light);
+            padding-left: 1.8rem;
         }
+
         .hero-badges {
             display: flex;
-            gap: 1.5rem;
-            margin-bottom: 2.8rem;
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
         }
-        .badge {
-            background: rgba(255,255,255,0.05);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            border-left: 3px solid var(--blue-light);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-        .btn-group {
+
+        .badge-item {
             display: flex;
-            gap: 1.5rem;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            color: #CCC;
         }
-        .btn-primary {
-            background: var(--blue-accent);
-            padding: 1rem 2.5rem;
+        .badge-item i {
+            color: var(--blue-light);
+            font-size: 1.2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        /* IMAGEN GUARDA - DERECHA, GRANDE */
+        .hero-guardia-wrapper {
+            flex: 1 1 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-guardia {
+            max-width: 100%;
+            height: auto;
+            max-height: 480px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 30px 50px rgba(0,0,0,0.8)) drop-shadow(0 0 30px rgba(28,126,214,0.4));
+            animation: floatHero 6s ease-in-out infinite;
+        }
+
+        .sello-elite {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(10,75,122,0.9);
+            backdrop-filter: blur(8px);
             border-radius: 50px;
+            padding: 0.5rem 1.8rem;
+            font-size: 0.9rem;
             font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 10px 25px -5px #0A4B7A;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 0 25px rgba(28,126,214,0.6);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .btn-primary:hover {
-            background: #0E5D99;
-            transform: scale(1.05);
+
+        @keyframes floatHero {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
         }
-        .btn-outline {
-            background: transparent;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            border: 1.5px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(5px);
-            transition: 0.2s;
-        }
-        .btn-outline:hover {
-            border-color: var(--blue-light);
-            background: rgba(28,126,214,0.1);
-        }
+
         /* ---------- TRUST BAR ---------- */
         .trust-bar {
             display: flex;
             justify-content: center;
             gap: 4rem;
-            padding: 1.8rem 5%;
-            background: rgba(0,0,0,0.3);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 2rem 5%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(28,126,214,0.2);
+            border-bottom: 1px solid rgba(28,126,214,0.2);
             flex-wrap: wrap;
         }
+
         .trust-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 500;
-            color: #CCC;
+            color: #FFF;
+            font-size: 1.05rem;
         }
         .trust-item i {
             color: var(--blue-light);
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 8px var(--blue-light));
         }
-        /* ---------- QUIENES SOMOS - SECCIÓN ÉLITE ---------- */
-        .about-section {
-            padding: 6rem 5%;
-            background: radial-gradient(circle at 0% 50%, #0C0E12, #0A0C0F);
-            position: relative;
-            overflow: hidden;
-        }
-        .about-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(28,126,214,0.03) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
-        .about-container {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        .about-content {
-            padding-right: 2rem;
-        }
-        .about-tag {
-            display: inline-block;
-            background: var(--gradient-blue);
-            padding: 0.4rem 1.2rem;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            margin-bottom: 1.8rem;
-            text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(10,75,122,0.3);
-        }
-        .about-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 2rem;
-            letter-spacing: -1.5px;
-        }
-        .about-title span {
-            color: var(--blue-light);
-            position: relative;
-            display: inline-block;
-        }
-        .about-title span::after {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background: rgba(28,126,214,0.2);
-            z-index: -1;
-        }
-        .about-text {
-            color: #CCC;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
-        }
-        .about-highlight {
-            background: rgba(28,126,214,0.1);
-            border-left: 4px solid var(--blue-light);
-            padding: 1.5rem;
-            border-radius: 0 16px 16px 0;
-            margin: 2rem 0;
-            font-style: italic;
-            color: #E0E0E0;
-        }
-        .agent-card {
-            background: var(--graphite);
-            border-radius: 32px;
-            padding: 2rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: var(--shadow-xl);
-            position: relative;
-            overflow: hidden;
-        }
-        .agent-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gradient-blue);
-        }
-        .agent-image-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .agent-profile-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 4px solid var(--blue-light);
-            object-fit: cover;
-            box-shadow: 0 0 40px rgba(28,126,214,0.5);
-            margin-bottom: 1.2rem;
-            background: var(--graphite);
-            transition: transform 0.4s;
-        }
-        .agent-profile-img:hover {
-            transform: scale(1.02);
-        }
-        .agent-badge {
-            background: rgba(28,126,214,0.2);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: 1px solid rgba(28,126,214,0.4);
-            backdrop-filter: blur(5px);
-        }
-        /* ---------- MISIÓN Y VISIÓN ---------- */
-        .mv-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .mv-card {
-            background: rgba(30, 32, 38, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.03);
-            border-radius: 24px;
-            padding: 2rem;
-            transition: 0.3s;
-        }
-        .mv-card:hover {
-            background: rgba(28,126,214,0.1);
-            border-color: var(--blue-light);
-            transform: translateY(-5px);
-        }
-        .mv-icon {
-            font-size: 2.2rem;
-            color: var(--blue-light);
-            margin-bottom: 1.2rem;
-        }
-        .mv-card h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-        .mv-card p {
-            color: #B0B0B0;
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-        /* ---------- SERVICIOS ---------- */
+
+        /* ---------- SECCIONES ---------- */
         .section {
-            padding: 6rem 5%;
+            padding: 7rem 5%;
+            position: relative;
         }
+
         .section-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -1.5px;
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            letter-spacing: -2px;
+            font-family: var(--font-serif);
         }
+        .section-title span {
+            color: var(--blue-light);
+            position: relative;
+            display: inline-block;
+        }
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(28,126,214,0.25);
+            z-index: -1;
+            border-radius: 10px;
+        }
+
         .section-sub {
-            color: #A0A0A0;
-            font-size: 1.1rem;
-            max-width: 600px;
+            color: #B0B0B0;
+            font-size: 1.2rem;
+            max-width: 700px;
             margin-bottom: 4rem;
             font-weight: 300;
         }
+
+        /* ---------- SERVICIOS ---------- */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
+
         .service-card {
-            background: var(--graphite);
-            padding: 2.5rem 1.8rem;
-            border-radius: 24px;
-            border: 1px solid #333;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 0%;
-            background: var(--blue-light);
-            transition: 0.4s;
-        }
-        .service-card:hover {
-            background: #25282E;
-            transform: translateY(-12px);
-            border-color: var(--blue-light);
-            box-shadow: var(--shadow-elegant);
-        }
-        .service-card:hover::before {
-            height: 100%;
-        }
-        .service-icon {
-            font-size: 2.5rem;
-            color: var(--blue-light);
-            margin-bottom: 1.5rem;
-        }
-        .service-card h3 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .service-card p {
-            color: #B0B0B0;
-            line-height: 1.6;
-        }
-        /* ---------- VALORES (REDISEÑADOS) ---------- */
-        .valores-section {
-            padding: 6rem 5%;
-            background: linear-gradient(145deg, #0C0E12, #0A0C0F);
-            position: relative;
-        }
-        .valores-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-        .valores-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-        .valores-title span {
-            color: var(--blue-light);
-            position: relative;
-        }
-        .valores-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .valor-card {
-            background: rgba(30, 32, 38, 0.6);
-            backdrop-filter: blur(8px);
-            padding: 2.5rem 1.5rem;
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.03);
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-        .valor-card:hover {
-            background: rgba(28,126,214,0.12);
-            border-color: var(--blue-light);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 30px -10px rgba(28,126,214,0.2);
-        }
-        .valor-icon {
-            font-size: 2.5rem;
-            color: var(--blue-light);
-            margin-bottom: 1.5rem;
-            transition: 0.3s;
-        }
-        .valor-card:hover .valor-icon {
-            transform: scale(1.1);
-            color: white;
-        }
-        .valor-card h4 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
-        }
-        .valor-card p {
-            color: #B0B0B0;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-        /* ---------- CHATBOT ÉLITE: CARLOS ---------- */
-        .chatbot-section {
-            background: radial-gradient(circle at 80% 30%, #0F1A24, #0A0C0F);
-            border-radius: 48px 48px 0 0;
-            padding: 5rem 5%;
-            margin-top: 2rem;
-            border-top: 1px solid #2C2E33;
-            position: relative;
-        }
-        .chatbot-container {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 4rem;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .chatbot-info h2 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 1.2rem;
-            line-height: 1.2;
-        }
-        .chatbot-info .highlight {
-            color: var(--blue-light);
-            border-bottom: 2px solid var(--blue-light);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-        .chat-avatar-card {
-            background: rgba(30, 32, 38, 0.7);
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 32px;
-            padding: 2rem;
-            box-shadow: var(--shadow-xl);
+            padding: 2.8rem 2rem;
+            border-radius: 28px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s;
         }
-        .avatar-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .agent-image {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 4px solid var(--blue-light);
-            object-fit: cover;
-            box-shadow: 0 0 40px rgba(28,126,214,0.3);
-            margin-bottom: 1rem;
-            background: #1E1F24;
-            background-image: url('https://github.com/Turomexico/U3SeguridadPrivada/blob/main/image.png?raw=true');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: #0F1A24;
-            background-blend-mode: normal;
-        }
-        .agent-name {
-            font-size: 1.6rem;
-            font-weight: 700;
-        }
-        .agent-rank {
-            color: var(--blue-light);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .chat-window {
-            background: #0C0E12;
-            border-radius: 24px;
-            padding: 1.5rem;
-            margin-top: 1.8rem;
-            border: 1px solid #333;
-            height: 260px;
-            display: flex;
-            flex-direction: column;
-        }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            padding-right: 5px;
-        }
-        .message {
-            padding: 0.7rem 1.2rem;
-            border-radius: 18px;
-            max-width: 85%;
-            word-break: break-word;
-            animation: fadeIn 0.3s;
-        }
-        .message.agent {
-            background: #1E2A36;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-            color: white;
-        }
-        .message.user {
-            background: var(--blue-accent);
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        .chat-input-area {
-            display: flex;
-            margin-top: 1rem;
-            gap: 0.8rem;
-        }
-        .chat-input-area input {
-            flex: 1;
-            background: #1A1D23;
-            border: 1px solid #3A3F4A;
-            border-radius: 40px;
-            padding: 0.9rem 1.3rem;
-            color: white;
-            font-size: 0.95rem;
-            outline: none;
-            transition: 0.2s;
-        }
-        .chat-input-area input:focus {
+
+        .service-card:hover {
+            transform: translateY(-15px);
             border-color: var(--blue-light);
-            box-shadow: 0 0 0 2px rgba(28,126,214,0.2);
+            box-shadow: 0 30px 50px -20px rgba(28,126,214,0.4);
         }
-        .chat-input-area button {
-            background: var(--blue-light);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.2s;
+
+        .service-icon {
+            font-size: 2.8rem;
+            color: var(--blue-light);
+            margin-bottom: 1.5rem;
         }
-        .chat-input-area button:hover {
-            background: #0E5D99;
-            transform: scale(1.1);
+
+        .service-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: var(--font-serif);
         }
-        .typing-indicator {
-            color: #AAA;
-            font-style: italic;
-            padding-left: 0.5rem;
-        }
-        /* ---------- MODAL COTIZAR - ESTILOS MEJORADOS ---------- */
+
+        /* ---------- MODAL COTIZAR ---------- */
         .modal-cotizar {
             display: none;
             position: fixed;
@@ -700,230 +412,170 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            backdrop-filter: blur(8px);
+            background-color: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
             z-index: 9999;
             align-items: center;
             justify-content: center;
         }
+
         .modal-card {
-            background: var(--graphite);
-            border: 1px solid #3A3F4A;
-            border-radius: 32px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(28,126,214,0.3);
+            border-radius: 36px;
             max-width: 550px;
             width: 90%;
-            padding: 2.8rem 2.5rem;
-            box-shadow: var(--shadow-xl);
+            padding: 3rem 2.8rem;
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.9);
             position: relative;
-            border-top: 4px solid var(--blue-light);
-            transform: scale(0.95);
-            transition: 0.3s;
+            border-top: 5px solid var(--blue-light);
         }
-        .modal-card h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.7rem;
-        }
-        .modal-card p {
-            color: #B0B0B0;
-            margin-bottom: 2rem;
-        }
+
         .campo {
-            margin-bottom: 1.4rem;
+            margin-bottom: 1.5rem;
         }
+
         .campo label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #AAA;
-            margin-bottom: 0.4rem;
+            letter-spacing: 2px;
+            color: #BBB;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
+
         .campo input,
         .campo select {
             width: 100%;
-            background: #1A1D23;
-            border: 1px solid #3F4450;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #3A3F4A;
             border-radius: 50px;
-            padding: 1rem 1.5rem;
+            padding: 1.1rem 1.6rem;
             color: white;
             font-size: 1rem;
             outline: none;
-            transition: 0.2s;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .campo select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23AAA' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1.5rem center;
-            background-size: 16px;
-            cursor: pointer;
-        }
-        .campo option {
-            background: var(--graphite);
-            color: white;
-        }
+
         .campo input:focus,
         .campo select:focus {
             border-color: var(--blue-light);
-            box-shadow: 0 0 0 3px rgba(28,126,214,0.2);
+            box-shadow: 0 0 0 4px rgba(28,126,214,0.2);
+            background: rgba(0,0,0,0.6);
         }
+
         .btn-enviar-cotizar {
-            background: var(--blue-light);
+            background: var(--gradient-blue);
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 1.1rem;
+            padding: 1.2rem;
             font-weight: 700;
             font-size: 1.1rem;
             width: 100%;
             cursor: pointer;
-            margin-top: 1rem;
-            transition: 0.2s;
+            margin-top: 1.2rem;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
+            box-shadow: 0 10px 25px rgba(10,75,122,0.5);
         }
         .btn-enviar-cotizar:hover {
-            background: #0E5D99;
             transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(28,126,214,0.7);
         }
-        .btn-cerrar-modal {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 1.8rem;
-            color: #999;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .btn-cerrar-modal:hover {
-            color: white;
-        }
-        .loading-animation {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: #0A4B7A;
-            border-radius: 50px;
-            padding: 0.8rem;
-            color: white;
-            font-weight: 600;
-        }
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 4px solid rgba(255,255,255,0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        /* ---------- REDES SOCIALES Y CRÉDITOS ---------- */
-        .social-credits {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2.5rem;
-            padding-top: 1.8rem;
-            border-top: 1px solid #2A2C30;
-        }
-        .social-icons {
-            display: flex;
-            gap: 1.8rem;
-        }
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #CCC;
-            transition: 0.2s;
-            font-weight: 400;
-        }
-        .social-icons a i {
-            font-size: 1.5rem;
-            transition: 0.2s;
-        }
-        .social-icons a:hover i {
-            color: var(--blue-light);
-            transform: translateY(-4px);
-        }
-        .credits {
-            color: #777;
-            font-size: 0.9rem;
-        }
-        .credits i {
-            color: var(--blue-light);
-        }
+
         /* ---------- FOOTER ---------- */
         footer {
             background: #060708;
-            padding: 4rem 5% 2rem;
-            border-top: 1px solid #202020;
+            padding: 5rem 5% 2.5rem;
+            border-top: 1px solid rgba(28,126,214,0.2);
         }
+
         .footer-grid {
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
+            gap: 3.5rem;
+            margin-bottom: 3.5rem;
         }
+
         .footer-logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
+            gap: 12px;
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-serif);
+            background: linear-gradient(to right, #FFFFFF, #B0D4FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .footer-logo img {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--blue-light));
         }
-        .footer-contact i {
-            color: var(--blue-light);
-            margin-right: 0.8rem;
+
+        .social-icons a {
+            background: rgba(255,255,255,0.05);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
         }
-        .footer-contact p {
-            margin-bottom: 0.7rem;
+        .social-icons a:hover {
+            background: var(--blue-light);
+            border-color: white;
+            transform: translateY(-5px);
         }
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #222;
-            color: #777;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+
+        /* ---------- RESPONSIVE ---------- */
         @media (max-width: 1200px) {
-            .about-container { grid-template-columns: 1fr; }
-            .valores-grid { grid-template-columns: repeat(3, 1fr); }
+            .hero-title { font-size: 4.5rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 1000px) {
-            .chatbot-container { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 3rem; }
-            .mv-container { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 800px) {
-            .valores-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-unico-container { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 2rem;
+            }
+            .hero-unico-content { 
+                order: 2; 
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-guardia-wrapper { 
+                order: 1; 
+            }
+            .hero-sub { 
+                border-left: none; 
+                border-top: 5px solid var(--blue-light); 
+                padding-top: 1.5rem; 
+                padding-left: 0; 
+            }
+            .hero-badges { justify-content: center; }
+            .hero-buttons { justify-content: center; }
         }
         @media (max-width: 700px) {
             nav { display: none; }
-            .valores-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; }
-            .social-credits { flex-direction: column; gap: 1.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .hero-title { font-size: 3.5rem; letter-spacing: -2px; }
+            .hero-guardia { max-height: 320px; }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER MODERNO -->
+
+    <!-- HEADER -->
     <header>
         <div class="logo">
             <div class="logo-icon">
@@ -937,19 +589,70 @@
             <a href="#">Nosotros</a>
             <a href="#">Contacto</a>
         </nav>
-        <a class="btn-cotizar" id="btnCotizarHeader"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>Cotizar 24/7</a>
+        <a class="btn-cotizar" id="btnCotizarHeader">
+            <i class="fas fa-shield-alt"></i> Cotizar 24/7
+        </a>
     </header>
 
-    <!-- MODAL COTIZAR - VERSIÓN MEJORADA CON UBICACIÓN -->
+    <!-- HERO ÚNICO: GUARDA GRANDE + SIEMPRE PROTEGIENDO (TODO UNIFICADO) -->
+    <section class="hero-unico">
+        <div class="hero-unico-container">
+            <!-- TEXTO: SIEMPRE PROTEGIENDO + PROTECCIÓN INTELIGENTE (FUSIONADO) -->
+            <div class="hero-unico-content">
+                <span class="hero-tag"><i class="fas fa-certificate"></i> PERMISO SSC_CDMX: 0105-23</span>
+                <h1 class="hero-title">SIEMPRE<br>PROTEGIENDO</h1>
+                <div class="hero-sub">
+                    <i class="fas fa-shield-halced" style="color: var(--blue-light); margin-right: 8px;"></i> 
+                    PROTECCIÓN INTELIGENTE · 25+ AÑOS DE EXPERIENCIA
+                </div>
+                <div class="hero-badges">
+                    <div class="badge-item"><i class="fas fa-user-tie"></i> Socios: 25+ años</div>
+                    <div class="badge-item"><i class="fas fa-clock"></i> Monitoreo 24/7</div>
+                    <div class="badge-item"><i class="fas fa-medal"></i> Confianza certificada</div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#" class="btn-cotizar" id="heroCotizarBtn" style="padding: 1rem 2.5rem; font-size: 1.1rem;">
+                        <i class="fas fa-headset"></i> ASESORÍA 24/7
+                    </a>
+                    <a href="#" style="background: transparent; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; border: 1.5px solid rgba(255,255,255,0.25); display: flex; align-items: center; gap: 10px; transition: 0.3s;">
+                        <i class="fas fa-play-circle"></i> VER SERVICIOS
+                    </a>
+                </div>
+            </div>
+            <!-- IMAGEN GUARDA EN GRANDE -->
+            <div class="hero-guardia-wrapper">
+                <img src="https://u3seguridadprivada.com/wp-content/uploads/2022/09/INTRAMURO.png" 
+                     alt="Guarda de élite U3" 
+                     class="hero-guardia"
+                     onerror="this.src='https://github.com/Turomexico/U3SeguridadPrivada/blob/main/image.png?raw=true';">
+                <div class="sello-elite">
+                    <i class="fas fa-shield-alt"></i> U3 ÉLITE
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR (REFORZADO) -->
+    <div class="trust-bar">
+        <div class="trust-item"><i class="fas fa-certificate"></i> Permiso 0105-23</div>
+        <div class="trust-item"><i class="fas fa-user-shield"></i> Perfil idóneo</div>
+        <div class="trust-item"><i class="fas fa-satellite-dish"></i> Monitoreo satelital</div>
+        <div class="trust-item"><i class="fas fa-award"></i> Capacitación constante</div>
+    </div>
+
+    <!-- MODAL COTIZAR -->
     <div id="modalCotizar" class="modal-cotizar">
         <div class="modal-card">
-            <span id="cerrarModalBtn" class="btn-cerrar-modal">&times;</span>
-            <h3><i class="fas fa-user-shield" style="color: var(--blue-light);"></i> Cotización exprés</h3>
-            <p>Un asesor U3 se comunicará en 5 min. Complete sus datos:</p>
+            <span id="cerrarModalBtn" style="position: absolute; top: 20px; right: 25px; font-size: 2rem; color: #AAA; cursor: pointer;">&times;</span>
+            <h3 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.7rem; font-family: var(--font-serif);">
+                <i class="fas fa-user-shield" style="color: var(--blue-light);"></i> Cotización
+            </h3>
+            <p style="color: #CCC; margin-bottom: 2rem;">Un asesor U3 se comunicará en 5 minutos.</p>
+            
             <div id="formCotizar">
                 <div class="campo">
                     <label><i class="fas fa-user"></i> NOMBRE</label>
-                    <input type="text" id="nombreCot" placeholder="Ej. Arturo Enrique" autocomplete="off">
+                    <input type="text" id="nombreCot" placeholder="Ej. Arturo Enrique">
                 </div>
                 <div class="campo">
                     <label><i class="fas fa-user-tag"></i> APELLIDO</label>
@@ -1002,121 +705,35 @@
                 </button>
             </div>
             <div id="loadingCotizar" style="display: none;">
-                <div class="loading-animation">
-                    <div class="spinner"></div>
-                    <span>Enviando a agentes de ventas U3...</span>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; background: #0A4B7A; border-radius: 50px; padding: 1rem; color: white;">
+                    <div style="width: 24px; height: 24px; border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <span>Enviando a agentes U3...</span>
                 </div>
-                <p style="text-align: center; margin-top: 1.2rem; color: #AAA; font-size: 0.9rem;">Será redirigido vía WhatsApp</p>
             </div>
         </div>
     </div>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-bg-video" style="background: url('https://images.unsplash.com/photo-1557597774-9d273605dfa2?q=80&w=2070&auto=format&fit=crop') center/cover;"></div>
-        <div class="hero-content reveal-left">
-            <span class="tag"><i class="fas fa-check-circle" style="margin-right: 6px;"></i> PERMISO SSC_CDMX: 0105-23</span>
-            <h1><span>SIEMPRE</span><br>PROTEGIENDO.</h1>
-            <p>Más de 25 años de experiencia combinan la solidez y la innovación. Modelos confiables, equipo de élite.</p>
-            <div class="hero-badges">
-                <div class="badge"><i class="fas fa-star" style="color: #FFD700;"></i> 25+ AÑOS</div>
-                <div class="badge"><i class="fas fa-building"></i> INTRAMUROS</div>
-                <div class="badge"><i class="fas fa-shield-hawk"></i> CUSTODIAS</div>
-            </div>
-            <div class="btn-group">
-                <a href="#" class="btn-primary" id="heroCotizarBtn"><i class="fas fa-headset" style="margin-right: 10px;"></i>SOLICITA ASESORÍA</a>
-                <a href="#" class="btn-outline"><i class="fas fa-play"></i> CONOCE SERVICIOS</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- TRUST BAR -->
-    <div class="trust-bar reveal-up">
-        <div class="trust-item"><i class="fas fa-certificate"></i> Permiso Oficial 0105-23</div>
-        <div class="trust-item"><i class="fas fa-user-tie"></i> Socios: 25+ años de experiencia</div>
-        <div class="trust-item"><i class="fas fa-clock"></i> Monitoreo 24/7/365</div>
-        <div class="trust-item"><i class="fas fa-medal"></i> Confianza certificada</div>
-    </div>
-
-    <!-- ============================================ -->
-    <!-- NUEVA SECCIÓN: QUIENES SOMOS (ÉLITE)        -->
-    <!-- ============================================ -->
-    <section class="about-section">
-        <div class="about-container">
-            <div class="about-content reveal-left">
-                <span class="about-tag"><i class="fas fa-shield-alt"></i> LEGADO DE EXCELENCIA</span>
-                <h2 class="about-title">Más que seguridad, <span>confianza estratégica</span></h2>
-                
-                <div class="about-text">
-                    <p style="margin-bottom: 1.5rem;">Somos una empresa de reciente creación respaldada por una verdadera fortaleza: <strong style="color: var(--blue-light);">más de 25 años de experiencia</strong> de nuestros socios fundadores en el sector de seguridad privada. Fusionamos la solidez del conocimiento adquirido con la energía, el talento y la visión vanguardista de jóvenes emprendedores.</p>
-                    
-                    <p style="margin-bottom: 1.5rem;">Nuestra propuesta de valor se basa en <strong style="color: white;">modelos de seguridad innovadores y altamente confiables</strong>, diseñados a la medida de un mercado que exige respuestas inmediatas y soluciones integrales. No solo protegemos activos; construimos relaciones de largo plazo con nuestros aliados comerciales a través de un equipo de soporte dedicado, cuya única misión es anticiparse y dar seguimiento puntual a cada necesidad.</p>
-                </div>
-                
-                <div class="about-highlight">
-                    <i class="fas fa-quote-left" style="color: var(--blue-light); margin-right: 8px;"></i> 
-                    No vendimos un servicio, asumimos sus riesgos como propios. Esa es la diferencia U3.
-                </div>
-                
-                <!-- MISIÓN Y VISIÓN EN CARDS -->
-                <div class="mv-container">
-                    <div class="mv-card">
-                        <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
-                        <h3>Misión</h3>
-                        <p>Contribuir al éxito de nuestros aliados comerciales a través de servicios profesionales y de alta calidad en seguridad privada integral, orientados por nuestros valores, ética y un alto sentido social.</p>
-                    </div>
-                    <div class="mv-card">
-                        <div class="mv-icon"><i class="fas fa-eye"></i></div>
-                        <h3>Visión</h3>
-                        <p>Ser la empresa líder en seguridad privada integral a nivel nacional, transformando la confianza de nuestros aliados en relaciones efectivas y duraderas, e inspirando en nuestros colaboradores la pasión por crecer juntos y mejorar su calidad de vida.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CARD DEL AGENTE CON LOGO REAL -->
-            <div class="agent-card reveal-right">
-                <div class="agent-image-wrapper">
-                    <img src="https://github.com/Turomexico/U3SeguridadPrivada/blob/main/image.png?raw=true" 
-                         alt="U3 Seguridad Privada - Identidad Corporativa" 
-                         class="agent-profile-img">
-                    
-                    <span class="agent-badge">
-                        <i class="fas fa-check-circle" style="color: var(--blue-light);"></i> IDENTIDAD U3
-                    </span>
-                    
-                    <div style="margin-top: 1.8rem; text-align: center; color: #AAA; border-top: 1px solid #333; padding-top: 1.5rem;">
-                        <div style="display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 1rem;">
-                            <span style="background: #0A4B7A; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.8rem;">25+ AÑOS</span>
-                            <span style="background: transparent; border: 1px solid #0A4B7A; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.8rem;">JÓVENES TALENTO</span>
-                        </div>
-                        <p style="font-style: italic; font-size: 0.95rem;">"Experiencia que se reinventa, visión que protege"</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICIOS -->
+    <!-- SERVICIOS PROFESIONALES -->
     <section class="section">
-        <h2 class="section-title reveal-left">EXPERTOS EN <span style="color: #1C7ED6;">SEGURIDAD PRIVADA</span></h2>
-        <p class="section-sub reveal-left">Diseñamos estrategias a la medida. Cada servicio ejecutado por personal con filtros de alto nivel.</p>
+        <h2 class="section-title">EXPERTOS EN <span>SEGURIDAD</span></h2>
+        <p class="section-sub">Diseñamos estrategias a la medida. Cada servicio ejecutado por personal con filtros de élite.</p>
         <div class="services-grid">
-            <div class="service-card reveal-left">
+            <div class="service-card">
                 <div class="service-icon"><i class="fas fa-building"></i></div>
                 <h3>INTRAMUROS</h3>
                 <p>Protección perimetral y activos. Personal con perfil idóneo, control de confianza y capacitación constante.</p>
             </div>
-            <div class="service-card reveal-right">
+            <div class="service-card">
                 <div class="service-icon"><i class="fas fa-truck"></i></div>
                 <h3>CUSTODIAS</h3>
                 <p>Traslado de valores y mercancía sensible. Blindaje, coordinación y monitoreo satelital en tiempo real.</p>
             </div>
-            <div class="service-card reveal-left">
+            <div class="service-card">
                 <div class="service-icon"><i class="fas fa-microchip"></i></div>
                 <h3>ELECTRÓNICA</h3>
-                <p>Circuito cerrado, control de accesos y sensores. Integración tecnológica para una vigilancia inteligente.</p>
+                <p>Circuito cerrado, control de accesos y sensores. Integración tecnológica para vigilancia inteligente.</p>
             </div>
-            <div class="service-card reveal-right">
+            <div class="service-card">
                 <div class="service-icon"><i class="fas fa-user-shield"></i></div>
                 <h3>EJECUTIVA</h3>
                 <p>Escoltas de alto perfil, análisis de rutas y seguridad personal para directivos y familias.</p>
@@ -1124,236 +741,91 @@
         </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- VALORES (REDISEÑADOS - ESTILO CARDS)        -->
-    <!-- ============================================ -->
-    <section class="valores-section">
-        <div class="valores-header reveal-up">
-            <h2 class="valores-title">Nuestros <span>Valores</span></h2>
-            <p style="color: #B0B0B0; font-size: 1.1rem; max-width: 700px; margin: 0 auto;">La brújula que guía cada decisión, cada operación y cada relación con nuestros aliados.</p>
-        </div>
-        
-        <div class="valores-grid">
-            <div class="valor-card reveal-scale">
-                <div class="valor-icon"><i class="fas fa-hand-peace"></i></div>
-                <h4>Respeto</h4>
-                <p>Respetamos la diversidad y el libre pensamiento en todas sus formas de expresión.</p>
-            </div>
-            <div class="valor-card reveal-scale">
-                <div class="valor-icon"><i class="fas fa-fire"></i></div>
-                <h4>Pasión</h4>
-                <p>Ponemos todo nuestro talento y creatividad al servicio de nuestros aliados comerciales. Nos mueve el amor por lo que hacemos.</p>
-            </div>
-            <div class="valor-card reveal-scale">
-                <div class="valor-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                <h4>Responsabilidad social</h4>
-                <p>Impulsamos iniciativas que contribuyan a mejorar las condiciones de vida de nuestros colaboradores, comunidad y sociedad.</p>
-            </div>
-            <div class="valor-card reveal-scale">
-                <div class="valor-icon"><i class="fas fa-gem"></i></div>
-                <h4>Integridad</h4>
-                <p>Anteponemos la honestidad como parte de nuestra cultura laboral, en aras de una competencia justa para ser mejores.</p>
-            </div>
-            <div class="valor-card reveal-scale">
-                <div class="valor-icon"><i class="fas fa-clock"></i></div>
-                <h4>Disciplina</h4>
-                <p>Hacemos propio cada proyecto. La constancia y el trabajo arduo nos impulsan a superar cualquier obstáculo.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CHATBOT CARLOS -->
-    <section class="chatbot-section">
-        <div class="chatbot-container">
-            <div class="chatbot-info reveal-left">
-                <h2>HABLA CON <span class="highlight">CARLOS</span></h2>
-                <p style="font-size: 1.3rem; font-weight: 300; margin-bottom: 2rem; color: #CCC;">Supervisor en línea · Uniformado U3</p>
-                <p style="margin-bottom: 2rem; line-height: 1.7;">Nuestro asesor virtual con apariencia real de elemento de seguridad. Respuestas basadas en información oficial de la empresa, 25 años de operación y servicios activos. Pregúntale sin esperas.</p>
-                <div style="display: flex; gap: 1.5rem;">
-                    <span style="background: #1C7ED6; padding: 0.4rem 1.2rem; border-radius: 30px; font-weight: 500;"><i class="fas fa-bolt"></i> Tiempo real</span>
-                    <span style="background: transparent; border:1px solid #444; padding: 0.4rem 1.2rem; border-radius: 30px;"><i class="fas fa-check"></i> IA entrenada</span>
-                </div>
-            </div>
-            <div class="chat-avatar-card reveal-right">
-                <div class="avatar-wrapper">
-                    <div class="agent-image"></div>
-                    <div class="agent-name">Carlos Mendoza</div>
-                    <div class="agent-rank">Supervisor Operativo · Uniformado U3</div>
-                    <div style="display: flex; gap: 5px; margin-bottom: 0.5rem;">
-                        <span style="background: #0E5D99; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem;">EN LÍNEA</span>
-                        <span style="background: #2C2E33; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.7rem;"><i class="fas fa-shield"></i> ID: U3-105</span>
-                    </div>
-                </div>
-                <div class="chat-window">
-                    <div class="chat-messages" id="chatMessages">
-                        <div class="message agent">
-                            <i class="fas fa-user-shield" style="margin-right: 6px;"></i> Carlos: Soy Carlos, supervisor de U3. ¿En qué puedo apoyarle? Consulta cotizaciones, servicios o el permiso 0105-23.
-                        </div>
-                    </div>
-                    <div class="chat-input-area">
-                        <input type="text" id="chatInput" placeholder="Escriba su mensaje...">
-                        <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- CONTACTO Y MAPA -->
-    <section class="section" style="background: #0C0E12;">
+    <section class="section" style="background: linear-gradient(145deg, #0A0C0F, #0C0E12);">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-            <div class="reveal-left">
-                <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">SEGURIDAD <span style="color: #1C7ED6;">A TU SERVICIO</span></h2>
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <p style="display: flex; gap: 1rem;"><i class="fas fa-map-pin" style="color: #1C7ED6; font-size: 1.5rem;"></i> Oficinas: Av Insurgentes Sur 1915, Guadalupe Inn, CDMX.</p>
-                    <p style="display: flex; gap: 1rem;"><i class="fas fa-envelope" style="color: #1C7ED6; font-size: 1.5rem;"></i> contacto@u3seguridadprivada.com</p>
-                    <p style="display: flex; gap: 1rem;"><i class="fas fa-phone-alt" style="color: #1C7ED6; font-size: 1.5rem;"></i> +52 1 221 895 1350 · Atención 24/7</p>
+            <div>
+                <h2 style="font-size: 2.8rem; font-family: var(--font-serif); font-weight: 800; margin-bottom: 2rem;">
+                    SEGURIDAD <span style="color: var(--blue-light);">A TU SERVICIO</span>
+                </h2>
+                <div style="display: flex; flex-direction: column; gap: 1.8rem;">
+                    <p style="display: flex; gap: 1rem; font-size: 1.1rem;">
+                        <i class="fas fa-map-pin" style="color: var(--blue-light); font-size: 1.8rem;"></i> 
+                        Av Insurgentes Sur 1915, Guadalupe Inn, CDMX.
+                    </p>
+                    <p style="display: flex; gap: 1rem; font-size: 1.1rem;">
+                        <i class="fas fa-envelope" style="color: var(--blue-light); font-size: 1.8rem;"></i> 
+                        contacto@u3seguridadprivada.com
+                    </p>
+                    <p style="display: flex; gap: 1rem; font-size: 1.1rem; font-weight: 700;">
+                        <i class="fas fa-phone-alt" style="color: var(--blue-light); font-size: 1.8rem;"></i> 
+                        +52 1 221 895 1350 · Atención 24/7
+                    </p>
                 </div>
-                <a href="#" class="btn-primary" style="margin-top: 2.5rem; display: inline-block;" id="contactoCotizarBtn"><i class="fas fa-calendar-check"></i> Agenda análisis sin costo</a>
+                <a href="#" class="btn-cotizar" id="contactoCotizarBtn" style="margin-top: 2.5rem; display: inline-block; padding: 1.2rem 2.8rem;">
+                    <i class="fas fa-calendar-check"></i> Agenda análisis sin costo
+                </a>
             </div>
-            <div style="background: #1A1D23; padding: 1.5rem; border-radius: 24px; border: 1px solid #333;" class="reveal-right">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.797306834472!2d-99.19741998538428!3d19.38012794653332!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0020db4d1d2f%3A0x1e7e5f6e8c7f6f0!2sAv%20Insurgentes%20Sur%201915%2C%20Guadalupe%20Inn%2C%20%C3%81lvaro%20Obreg%C3%B3n%2C%2001020%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1647890123456!5m2!1ses!2smx" width="100%" height="280" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"></iframe>
+            <div style="background: rgba(30,32,38,0.6); backdrop-filter: blur(12px); padding: 1.5rem; border-radius: 28px; border: 1px solid rgba(28,126,214,0.3);">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.797306834472!2d-99.19741998538428!3d19.38012794653332!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0020db4d1d2f%3A0x1e7e5f6e8c7f6f0!2sAv%20Insurgentes%20Sur%201915%2C%20Guadalupe%20Inn%2C%20%C3%81lvaro%20Obreg%C3%B3n%2C%2001020%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1647890123456!5m2!1ses!2smx" width="100%" height="300" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER CON REDES Y CRÉDITOS -->
+    <!-- FOOTER -->
     <footer>
         <div class="footer-grid">
             <div>
                 <div class="footer-logo">
-                    <img src="https://github.com/Turomexico/U3SeguridadPrivada/blob/main/image.png?raw=true" alt="U3 Seguridad" style="width: 40px; height: 40px; object-fit: contain;">
-                    U3 SEGURIDAD
+                    <img src="https://github.com/Turomexico/U3SeguridadPrivada/blob/main/image.png?raw=true" alt="U3">
+                    U3
                 </div>
-                <p style="margin-top: 1.5rem; color: #AAA; line-height: 1.6;">Innovación y confianza. Respaldo de 25 años en el sector.</p>
+                <p style="margin-top: 1.8rem; color: #AAA; line-height: 1.7; max-width: 300px;">
+                    Innovación y confianza. Respaldo de 25 años en el sector de seguridad privada.
+                </p>
             </div>
             <div>
-                <h4 style="margin-bottom: 1.5rem;">Servicios</h4>
-                <p style="color: #BBB; margin-bottom: 0.5rem;">Intramuros</p>
-                <p style="color: #BBB; margin-bottom: 0.5rem;">Custodias</p>
-                <p style="color: #BBB; margin-bottom: 0.5rem;">Electrónica</p>
+                <h4 style="margin-bottom: 1.8rem; font-size: 1.3rem; font-weight: 700;">Servicios</h4>
+                <p style="color: #BBB; margin-bottom: 0.8rem;">Intramuros</p>
+                <p style="color: #BBB; margin-bottom: 0.8rem;">Custodias</p>
+                <p style="color: #BBB; margin-bottom: 0.8rem;">Electrónica</p>
                 <p style="color: #BBB;">Ejecutiva</p>
             </div>
             <div>
-                <h4 style="margin-bottom: 1.5rem;">Legal</h4>
-                <p style="color: #BBB;">Permiso SSC_CDMX: 0105-23</p>
-                <p style="color: #BBB;">Aviso de privacidad</p>
+                <h4 style="margin-bottom: 1.8rem; font-size: 1.3rem; font-weight: 700;">Legal</h4>
+                <p style="color: #BBB; margin-bottom: 0.8rem;">Permiso SSC_CDMX: 0105-23</p>
+                <p style="color: #BBB; margin-bottom: 0.8rem;">Aviso de privacidad</p>
                 <p style="color: #BBB;">Términos y condiciones</p>
             </div>
-            <div class="footer-contact">
-                <h4 style="margin-bottom: 1.5rem;">Contacto</h4>
-                <p><i class="fas fa-phone"></i> +52 1 221 895 1350</p>
-                <p><i class="fas fa-envelope"></i> contacto@u3seguridadprivada.com</p>
-                <p><i class="fas fa-map-marker-alt"></i> CDMX, México</p>
+            <div>
+                <h4 style="margin-bottom: 1.8rem; font-size: 1.3rem; font-weight: 700;">Contacto</h4>
+                <p style="color: #BBB; margin-bottom: 0.8rem;"><i class="fas fa-phone-alt" style="color: var(--blue-light);"></i> +52 1 221 895 1350</p>
+                <p style="color: #BBB; margin-bottom: 0.8rem;"><i class="fas fa-envelope" style="color: var(--blue-light);"></i> contacto@u3seguridadprivada.com</p>
+                <p style="color: #BBB;"><i class="fas fa-map-marker-alt" style="color: var(--blue-light);"></i> CDMX, México</p>
             </div>
         </div>
         
-        <div class="social-credits">
-            <div class="social-icons">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid #2A2C30;">
+            <div class="social-icons" style="display: flex; gap: 1.5rem;">
                 <a href="https://www.instagram.com/u3_seguridad_privada/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
                 <a href="https://www.facebook.com/profile.php?id=61579295142613" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
                 <a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
             </div>
-            <div class="credits">
-                <i class="fas fa-shield-alt"></i> U3 Seguridad Privada · Créditos: diseño élite
+            <div style="color: #777; font-size: 0.95rem;">
+                <i class="fas fa-shield-alt" style="color: var(--blue-light);"></i> U3 Seguridad Privada · Diseño élite
             </div>
         </div>
-        <div class="copyright">
+        <div style="text-align: center; padding-top: 2.5rem; color: #777; font-size: 0.9rem;">
             U3 Seguridad Privada, S.A. de C.V. · Todos los derechos reservados.
         </div>
     </footer>
 
     <script>
-        // -------------------------------------------------------------
-        // 1. CONFIGURACIÓN API GEMINI
-        // -------------------------------------------------------------
-        const API_KEY = 'AIzaSyCbgTewjnV83oDBEeD1Sfh-BfWFiosFr-U';
-        let model;
-
-        (async function initGemini() {
-            try {
-                const { GoogleGenerativeAI } = await import('https://www.gstatic.com/generative-ai/generative-ai.umd.js');
-                const genAI = new GoogleGenerativeAI(API_KEY);
-                model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-                console.log("✅ Gemini listo");
-            } catch (error) {
-                console.error("Error al cargar Gemini", error);
-            }
-        })();
-
-        // Elementos del chat
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('sendChatBtn');
-
-        const contextoU3 = `
-        U3 Seguridad Privada, permiso SSC_CDMX: 0105-23. Socios fundadores con más de 25 años de experiencia.
-        Servicios: Intramuros (seguridad en bienes e instalaciones, personal con filtros de confianza), 
-        Custodias, Electrónica (CCTV, alarmas), Ejecutiva (escoltas). 
-        Oficinas: Av Insurgentes Sur 1915, Guadalupe Inn, CDMX. 
-        Tel: +52 1 221 895 1350, Atención 24/7. Email: contacto@u3seguridadprivada.com.
-        Valores: Respeto, Pasión, Responsabilidad social, Integridad, Disciplina.
-        El asesor virtual es Carlos, supervisor operativo con uniforme U3.
-        Responde siempre como Carlos, en primera persona, amable pero formal, ofreciendo datos concretos de U3.
-        Si no sabes algo, sugiere contacto directo al +52 1 221 895 1350.
-        `;
-
-        async function enviarMensaje(mensajeUsuario) {
-            if (!model) return "Carlos: Estoy conectando el sistema, por favor intenta de nuevo en unos segundos.";
-            try {
-                const prompt = `${contextoU3}\n\nUsuario: ${mensajeUsuario}\nCarlos (Supervisor U3):`;
-                const result = await model.generateContent(prompt);
-                const response = await result.response;
-                let text = response.text();
-                text = text.replace(/^Carlos:?/i, '').trim();
-                return `Carlos: ${text}`;
-            } catch (error) {
-                console.error(error);
-                return "Carlos: Disculpa, tenemos alta demanda. ¿Prefieres que te contacte vía telefónica? Llama al +52 1 221 895 1350.";
-            }
-        }
-
-        function addMessage(sender, text) {
-            const msgDiv = document.createElement('div');
-            msgDiv.classList.add('message', sender);
-            if (sender === 'agent') {
-                msgDiv.innerHTML = `<i class="fas fa-user-shield" style="margin-right: 6px;"></i> ${text}`;
-            } else {
-                msgDiv.textContent = text;
-            }
-            chatMessages.appendChild(msgDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        async function handleSend() {
-            const userText = chatInput.value.trim();
-            if (userText === '') return;
-            addMessage('user', userText);
-            chatInput.value = '';
-
-            const typingDiv = document.createElement('div');
-            typingDiv.classList.add('message', 'agent', 'typing-indicator');
-            typingDiv.innerHTML = `<i class="fas fa-ellipsis-h"></i> Carlos está escribiendo...`;
-            chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            const respuesta = await enviarMensaje(userText);
-            chatMessages.removeChild(typingDiv);
-            addMessage('agent', respuesta);
-        }
-
-        sendBtn.addEventListener('click', handleSend);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleSend();
-        });
-
-        // -------------------------------------------------------------
-        // 2. MODAL COTIZAR - VERSIÓN MEJORADA CON NOMBRE, APELLIDO Y ESTADO
-        // -------------------------------------------------------------
+        // ---------- MODAL COTIZAR ----------
         const modal = document.getElementById('modalCotizar');
         const btnCotizar = document.getElementById('btnCotizarHeader');
-        const heroCotizarBtn = document.getElementById('heroCotizarBtn');
-        const contactoCotizarBtn = document.getElementById('contactoCotizarBtn');
+        const heroBtn = document.getElementById('heroCotizarBtn');
+        const contactoBtn = document.getElementById('contactoCotizarBtn');
         const cerrarModal = document.getElementById('cerrarModalBtn');
         const formCotizar = document.getElementById('formCotizar');
         const loadingDiv = document.getElementById('loadingCotizar');
@@ -1370,8 +842,8 @@
         }
 
         btnCotizar.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
-        if (heroCotizarBtn) heroCotizarBtn.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
-        if (contactoCotizarBtn) contactoCotizarBtn.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
+        if (heroBtn) heroBtn.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
+        if (contactoBtn) contactoBtn.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
 
         cerrarModal.addEventListener('click', () => { modal.style.display = 'none'; });
         window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
@@ -1379,49 +851,24 @@
         enviarBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Obtener valores del formulario
             const nombre = document.getElementById('nombreCot').value.trim();
             const apellido = document.getElementById('apellidoCot').value.trim();
             const telefono = document.getElementById('telCot').value.trim();
             const estado = document.getElementById('estadoCot').value;
 
-            // Validar campos
-            if (!nombre) {
-                alert('Por favor ingrese su nombre.');
-                return;
-            }
-            if (!apellido) {
-                alert('Por favor ingrese su apellido.');
-                return;
-            }
-            if (!telefono) {
-                alert('Por favor ingrese su teléfono.');
-                return;
-            }
-            if (!estado) {
-                alert('Por favor seleccione su estado.');
+            if (!nombre || !apellido || !telefono || !estado) {
+                alert('Todos los campos son obligatorios.');
                 return;
             }
 
             formCotizar.style.display = 'none';
             loadingDiv.style.display = 'block';
 
-            // Crear mensaje formateado correctamente - SIN %0A%0A visible, con saltos de línea reales
-            const mensaje = `Hola, solicito cotización U3.
-
-Nombre: ${nombre}
-Apellido: ${apellido}
-Teléfono: ${telefono}
-Ubicación: ${estado}
-
-¡Gracias!`;
-
-            // Codificar el mensaje para URL
-            const mensajeCodificado = encodeURIComponent(mensaje);
+            const mensaje = `Hola, solicito cotización U3.\n\nNombre: ${nombre}\nApellido: ${apellido}\nTeléfono: ${telefono}\nUbicación: ${estado}\n\n¡Gracias!`;
             const telefonoContacto = '5212218951350';
 
             setTimeout(() => {
-                window.open(`https://wa.me/${telefonoContacto}?text=${mensajeCodificado}`, '_blank');
+                window.open(`https://wa.me/${telefonoContacto}?text=${encodeURIComponent(mensaje)}`, '_blank');
                 setTimeout(() => {
                     modal.style.display = 'none';
                     formCotizar.style.display = 'block';
@@ -1430,55 +877,22 @@ Ubicación: ${estado}
             }, 2000);
         });
 
-        // -------------------------------------------------------------
-        // 3. ANIMACIONES GSAP
-        // -------------------------------------------------------------
+        // ---------- GSAP ANIMACIONES ----------
         gsap.registerPlugin(ScrollTrigger);
-
-        function animateReveal() {
-            gsap.utils.toArray('.reveal-left').forEach(el => {
-                gsap.fromTo(el, 
-                    { x: -100, opacity: 0, visibility: 'visible' },
-                    { x: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
-                      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
-                    }
-                );
-            });
-            gsap.utils.toArray('.reveal-right').forEach(el => {
-                gsap.fromTo(el, 
-                    { x: 100, opacity: 0, visibility: 'visible' },
-                    { x: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
-                      scrollTrigger: { trigger: el, start: 'top 85%' }
-                    }
-                );
-            });
-            gsap.utils.toArray('.reveal-up').forEach(el => {
-                gsap.fromTo(el, 
-                    { y: 80, opacity: 0, visibility: 'visible' },
-                    { y: 0, opacity: 1, duration: 1, ease: 'back.out(1.2)',
-                      scrollTrigger: { trigger: el, start: 'top 90%' }
-                    }
-                );
-            });
-            gsap.utils.toArray('.reveal-scale').forEach(el => {
-                gsap.fromTo(el, 
-                    { scale: 0.7, opacity: 0, visibility: 'visible' },
-                    { scale: 1, opacity: 1, duration: 0.8, ease: 'elastic.out(1, 0.4)',
-                      scrollTrigger: { trigger: el, start: 'top 85%' }
-                    }
-                );
-            });
-        }
-
+        
         window.addEventListener('load', () => {
-            document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up, .reveal-scale').forEach(el => {
-                el.style.visibility = 'visible';
+            gsap.from('.hero-unico', { duration: 1, y: 40, opacity: 0, ease: 'power3.out' });
+            gsap.from('.trust-bar', { duration: 1, y: 40, opacity: 0, delay: 0.2 });
+            
+            gsap.utils.toArray('.service-card').forEach((el, i) => {
+                gsap.fromTo(el, 
+                    { y: 80, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.9, delay: i * 0.15,
+                      scrollTrigger: { trigger: el, start: 'top 85%' }
+                    }
+                );
             });
-            animateReveal();
-            gsap.from('.hero-content', { duration: 1.5, y: 50, opacity: 0, ease: 'power3.out' });
-            gsap.from('.trust-bar', { duration: 1, y: 40, opacity: 0, delay: 0.5, ease: 'power2.out' });
         });
     </script>
-    <script async defer src="https://www.gstatic.com/generative-ai/generative-ai.umd.js"></script>
 </body>
 </html>
